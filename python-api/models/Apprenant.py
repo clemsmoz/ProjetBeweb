@@ -15,7 +15,7 @@ class Apprenant(User):
         self.password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
     def get_password_hash(self):
-            return f"{self.password_hash}"
+            return self.password_hash
 
     def check_password(self, password):
         # Vérifier si le mot de passe fourni correspond au mot de passe haché stocké
