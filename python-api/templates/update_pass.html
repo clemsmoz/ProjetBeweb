@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<button class="btn btn-info" onclick="window.location.href='/'">Retour</button><br><br>
+<button class="btn user return" onclick="window.location.href='/'">Retour</button><br><br>
 
 <form action = "http://localhost:5000/updatePassword" method = "POST" onsubmit="return checkPasswords()">
     <div class="form-group">
@@ -19,8 +19,8 @@
         <input type="password" class="form-control" id="password2" name="password2" aria-describedby="passwordConfirmHelp" value="james2023">
         <small id="passwordConfirmHelp" class="form-text text-muted"></small>
     </div>
-
-    <button type="submit" class="btn btn-info">OK</button>
+    <br><br>
+    <button type="submit" class="btn user form-control">VALIDER</button>
 </form>
 
 <script>
