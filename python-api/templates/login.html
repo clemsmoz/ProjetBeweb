@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<h1>EVAL FONDESPIERRE</h1>
+<img id='img_fondes' src="{{ url_for('static', filename='images/eval_fondes.png') }}" alt="fondespierre">
 
 <h2>{% with messages = get_flashed_messages() %}
     {% if messages %}
@@ -28,5 +28,5 @@
     <button type="submit" class="btn btn-info">OK</button>
 </form>
 <br><br>
-<p>Première visite ? <a href="/updatePass">modifier le mot de passe</a></p>
+<p>Première visite ? <a id="mdplink" href="/updatePass">modifier le mot de passe</a></p>
 {% endblock %}

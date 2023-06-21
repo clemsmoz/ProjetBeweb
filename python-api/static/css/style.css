@@ -1,4 +1,4 @@
-li{
+  li{
     text-decoration: none;
   }
   #navigation {
@@ -28,4 +28,16 @@ li{
     justify-content: center;
     align-items: center;
     margin: auto;
+  }
+  #img_fondes{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+  }
+  #mdplink{
+    color: #17a2b8;
+  }
+  #mdplink:hover{
+    color: #117382;
   }
