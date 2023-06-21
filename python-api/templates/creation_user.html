@@ -24,7 +24,7 @@
     }
 </script>
 {% include "navbar.html" %}
-<button class="btn btn-primary" onclick="window.location.href='/accueil'">Retour</button><br><br>
+<h1 class="admin_title">NOUVEL UTILISATEUR</h1>
 <div class="form-group">
     <label for="userType">Choisissez le role utilisateur :</label>
     <select name="userType" class="form-control" id="userType" onchange="showForm()">
@@ -87,7 +87,10 @@
             <option value="n">non</option>
         </select>
     </div><br>
-	<button type="submit" class="btn btn-primary">Submit</button>
+    <div class="optnav">
+        <button type="button" class="btn navbtn" onclick="window.location.href='/accueil'">Retour</button>
+        <button type="submit" class="btn navbtn">Valider</button>
+    </div>
 </form>
 
 <form id="formateurForm" style="display: none;" action = "http://localhost:5000/creaFormateur" method = "POST">
@@ -134,7 +137,10 @@
             <option value="4">BePro</option>
         </select>
     </div><br>
-	<button type="submit" class="btn btn-primary">Submit</button>
+	<div class="optnav">
+        <button type="button" class="btn navbtn" onclick="window.location.href='/accueil'">Retour</button>
+        <button type="submit" class="btn navbtn">Valider</button>
+    </div>
 </form>
 
 <form id="apprenantForm" style="display: none;" action = "http://localhost:5000/creaApprenant" method = "POST">
@@ -205,7 +211,10 @@
             <option value="4">BePro</option>
         </select>
     </div><br>
-	<button type="submit" class="btn btn-primary">Submit</button>
+	<div class="optnav">
+        <button type="button" class="btn navbtn" onclick="window.location.href='/accueil'">Retour</button>
+        <button type="submit" class="btn navbtn">Valider</button>
+    </div>
 </form>
 
 <form id="salarieForm" style="display: none;" action = "http://localhost:5000/creaSalarie" method = "POST">
@@ -253,7 +262,10 @@
             <option value="4">BePro</option>
         </select>
     </div><br>
-	<button type="submit" class="btn btn-primary">Submit</button>
+	<div class="optnav">
+        <button type="button" class="btn navbtn" onclick="window.location.href='/accueil'">Retour</button>
+        <button type="submit" class="btn navbtn">Valider</button>
+    </div>
 </form>
 
 {% endblock %}

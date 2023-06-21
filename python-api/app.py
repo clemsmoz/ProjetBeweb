@@ -104,6 +104,24 @@ def updatePassword():
          flash(message)
          return redirect('/')
 
+@app.route('/createFormation')
+def post2():
+    if controller.valide_token.has_valid_token() == 'administrateur':
+        # L'utilisateur est authentifié, permettre l'accès à la page
+        return render_template('creation_formation.html')
+    else:
+        # L'utilisateur n'est pas authentifié, rediriger vers la page de connexion
+        return 'Veuillez vous connecter pour accéder à cette page'
+
+@app.route('/selection')
+def post3():
+    if controller.valide_token.has_valid_token() == 'administrateur':
+        # L'utilisateur est authentifié, permettre l'accès à la page
+        return render_template('selection.html')
+    else:
+        # L'utilisateur n'est pas authentifié, rediriger vers la page de connexion
+        return 'Veuillez vous connecter pour accéder à cette page'
+
 if __name__ == '__main__':
         app.static_folder = 'static'
         app.run(host='0.0.0.0', port=5000)
