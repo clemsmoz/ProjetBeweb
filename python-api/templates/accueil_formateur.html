@@ -2,8 +2,6 @@
 
 {% block content %}
 
-<h1>EVAL FONDESPIERRE</h1>
-
 <h1>{% with messages = get_flashed_messages() %}
     {% if messages %}
         <ul class="flash-messages">
@@ -13,16 +11,18 @@
         </ul>
     {% endif %}
 {% endwith %}</h1>
+
 <h1>{{ alerte }}</h1>
 
-<nav>
-    <ul>
-        <li><a href="/accueil">ACCUEIL</a></li>
-        <li>BILAN</li>
-        <li>COMPETENCE</li>
-        <li>EVALUATION</li>
-        <li>LISTE ELEVES</li>
-    </ul>
-</nav>
-<h3><a href="/logout">Deconnexion</a></h3>
+{% if section == 1 %}
+    <img class='img_section' src="{{ url_for('static', filename='images/becare.png') }}" alt="becare">
+{% elif section == 2 %}
+    <img class='img_section' src="{{ url_for('static', filename='images/begreen.png') }}" alt="begreen">
+{% elif section == 3 %}
+    <img class='img_section' src="{{ url_for('static', filename='images/beweb.png') }}" alt="beweb">
+{% else %}
+    <img class='img_section' src="{{ url_for('static', filename='images/bepro.png') }}" alt="bepro">
+{% endif %}
+
+{% include "navbar.html" %}
 {% endblock %}

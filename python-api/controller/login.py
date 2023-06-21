@@ -30,9 +30,9 @@ def verifyLog():
                             table_result = c.fetchone()  
 
                             if table_result:
-                                table_name, pseudo = table_result
+                                table_name, pseudo, section = table_result
                                 # Générer le token de connexion en utilisant le nom de la table
-                                payload = {'pseudo': pseudo, 'user_type': table_name}
+                                payload = {'pseudo': pseudo, 'user_type': table_name, 'section': section}
                                 secret_key = 'fondes2023'  # Remplacez par votre clé secrète
                                 token = jwt.encode(payload, secret_key, algorithm='HS256')
                                 session['token'] = token

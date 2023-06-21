@@ -22,13 +22,29 @@ def login():
 @app.route('/accueil')
 def index():
     token = session.get('token')
-    if controller.valide_token.has_valid_token_administrateur(): 
+    if controller.valide_token.has_valid_token() == 'administrateur':
+        role="administrateur"
+        section = controller.valide_token.verify_section()
+        app.jinja_env.globals['role'] = role
+        app.jinja_env.globals['section'] = section
         return render_template('accueil_admin.html')
-    elif controller.valide_token.has_valid_token_formateur():
+    elif controller.valide_token.has_valid_token() == 'formateur':
+        role="formateur"
+        section = controller.valide_token.verify_section()
+        app.jinja_env.globals['role'] = role
+        app.jinja_env.globals['section'] = section
         return render_template('accueil_formateur.html')
-    elif controller.valide_token.has_valid_token_apprenant():
+    elif controller.valide_token.has_valid_token() == 'apprenant':
+        role="apprenant"
+        section = controller.valide_token.verify_section()
+        app.jinja_env.globals['role'] = role
+        app.jinja_env.globals['section'] = section
         return render_template('accueil_apprenant.html')
-    elif controller.valide_token.has_valid_token_salarie():
+    elif controller.valide_token.has_valid_token() == 'salarie':
+        role="salarie"
+        section = controller.valide_token.verify_section()
+        app.jinja_env.globals['role'] = role
+        app.jinja_env.globals['section'] = section
         return render_template('accueil_salarie.html')
     else:
         return render_template('login.html', message='veuillez vous connecter')
@@ -41,9 +57,9 @@ def logout():
 
 @app.route('/create')
 def post():
-    if controller.valide_token.has_valid_token_administrateur():
+    if controller.valide_token.has_valid_token() == 'administrateur':
         # L'utilisateur est authentifié, permettre l'accès à la page
-        return render_template('creation.html')
+        return render_template('creation_user.html')
     else:
         # L'utilisateur n'est pas authentifié, rediriger vers la page de connexion
         return 'Veuillez vous connecter pour accéder à cette page'
@@ -89,4 +105,5 @@ def updatePassword():
          return redirect('/')
 
 if __name__ == '__main__':
+        app.static_folder = 'static'
         app.run(host='0.0.0.0', port=5000)

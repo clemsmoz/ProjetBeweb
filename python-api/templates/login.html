@@ -1,7 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>{% with messages = get_flashed_messages() %}
+
+<img id='img_fondes' src="{{ url_for('static', filename='images/eval_fondes.png') }}" alt="fondespierre">
+
+<h2>{% with messages = get_flashed_messages() %}
     {% if messages %}
         <ul class="flash-messages">
             {% for message in messages %}
@@ -9,7 +12,7 @@
             {% endfor %}
         </ul>
     {% endif %}
-{% endwith %}</h1>
+{% endwith %}</h2>
 
 <form action = "http://localhost:5000/verifyLogin" method = "GET">
     <div class="form-group">
@@ -22,8 +25,8 @@
         <input type="password" class="form-control" id="password" name="password" aria-describedby="passwordHelp" placeholder="James2023" value="james2023">
         <small id="passwordHelp" class="form-text text-muted"></small>
     </div>
-    <button type="submit" class="btn btn-primary">OK</button>
+    <button type="submit" class="btn btn-info">OK</button>
 </form>
-
-<h3>Première visite ? <a href="/updatePass">créer mot de passe</a></h3>
+<br><br>
+<p>Première visite ? <a id="mdplink" href="/updatePass">modifier le mot de passe</a></p>
 {% endblock %}
