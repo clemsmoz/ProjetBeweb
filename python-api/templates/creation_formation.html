@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% include "navbar.html" %}
+<h1 class="admin_title">NOUVELLE FORMATION</h1>
+<form id="addFormation" action="" method = "POST">
+    <div class="form-group">
+        <label for="form_title">INTITULE FORMATION</label>
+        <input type="text" class="form-control form_title" name="form_title" aria-describedby="formTitleHelp" placeholder="titre formation" value="DWWM">
+        <small class="form-text text-muted formTitleHelp"></small>
+    </div>
+    <div class="form-group">
+        <label for="title_activite">INTITULE ACTIVITE</label>
+        <div class="add_act">
+            <input type="text" class="form-control act_title" name="act_title" aria-describedby="acTitleHelp" placeholder="titre activité" value="Front-End">
+            <small class="form-text text-muted actTitleHelp"></small>
+            <button type="button" class="btn plusbtn"><i class="fa-solid fa-plus"></i></button>
+        </div>
+    </div><br>
+    <div class="optnav">
+        <button type="button" class="btn navbtn" onclick="window.location.href='/accueil'">Retour</button>
+        <button type="submit" class="btn navbtn">Valider</button>
+    </div>
+</form>
+
+{% endblock %}
