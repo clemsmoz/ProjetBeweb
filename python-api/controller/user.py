@@ -24,7 +24,7 @@ def insertAdmin():
         with mysql.connector.connect(**connection_params) as db:
             with db.cursor() as c:
                 params = (user.nom, user.prenom, user.pseudo, user.email, user.telephone, user.get_password_hash(), user.section)
-                params2 = (user.nom, user.prenom, user.pseudo+'form', user.email, user.telephone, user.get_password_hash(), user.section)
+                params2 = (user.nom, user.prenom, user.pseudo+'-f', user.email, user.telephone, user.get_password_hash(), user.section)
                 if request.form['formateur'] == 'y':
                     try:
                         c.execute(DAO.queries_formateur.insert_formateur, params2)

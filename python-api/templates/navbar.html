@@ -1,0 +1,72 @@
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let navbar = document.getElementById('navbar');
+        let menuButton = document.getElementById('menuButton');
+        let buttons = document.getElementsByTagName('button');
+
+        menuButton.addEventListener('click', function() {
+            navbar.classList.toggle('show');
+        });
+
+        {% if section == 1 %}
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].classList.add('btn-warning');
+            }
+        {% elif section == 2 %}
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].classList.add('btn-success');
+            }
+        {% elif section == 3 %}
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].classList.add('btn-danger');
+            }
+        {% else %}
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].classList.add('btn-primary');
+            }
+        {% endif %}
+    });
+</script>
+
+
+<div id="navigation">
+    <button id="menuButton" class="btn container-fluid">Menu</button>
+    <nav id="navbar" class="navbar navbar-inverse">
+        <ul class="nav navbar-nav">
+            {% if role == 'administrateur' %}
+                <li><button class="btn btn-block" onclick="window.location.href='/accueil'">ACCUEIL</button></li>
+                <li><button class="btn btn-block" onclick="window.location.href='/create'">CREATION UTILISATEUR</button></li>
+                <li>CREATION</li>
+                <li>SELECTION</li>
+                <li>BILAN</li>
+                <li>COMPETENCE</li>
+                <li>EVALUATION</li>
+                <li>LISTE ELEVES</li>
+                <li><button class="btn btn-block" onclick="window.location.href='/logout'">DECONNEXION</button></li>
+            {% elif role == 'formateur' %}
+                <li><button class="btn btn-block" onclick="window.location.href='/accueil'">ACCUEIL</button></li>
+                <li>BILAN</li>
+                <li>COMPETENCE</li>
+                <li>EVALUATION</li>
+                <li>LISTE ELEVES</li>
+                <li><button class="btn btn-block" onclick="window.location.href='/logout'">DECONNEXION</button></li>
+            {% elif role == 'apprenant' %}
+                <li><button class="btn btn-block" onclick="window.location.href='/accueil'">ACCUEIL</button></li>
+                <li>MON PROFIL</li>
+                <li>ACTIVITE TYPE 1</li>
+                <li>ACTIVITE TYPE 2</li>
+                <li>...</li>
+                <li><button class="btn btn-block" onclick="window.location.href='/logout'">DECONNEXION</button></li>
+            {% elif role == 'salarie' %}
+                <li><button class="btn btn-block" onclick="window.location.href='/accueil'">ACCUEIL</button></li>
+                <li>PROMO 1</li>
+                <li>PROMO 2</li>
+                <li>PROMO 3</li>
+                <li>PROMO 4</li>
+                <li>PROMO 5</li>
+                <li>PROMO 6</li>
+                <li><button class="btn btn-block" onclick="window.location.href='/logout'">DECONNEXION</button></li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
