@@ -37,7 +37,7 @@ def get_object(pseudo):
                 table = c.fetchall()
                 user = []
                 for row in table:
-                    user = Formateur(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9])
+                    user = Formateur(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8])
                     return user
             elif role == 'apprenant':
                 c.execute(DAO.queries_apprenant.get_apprenant, {'pseudo' : pseudo})

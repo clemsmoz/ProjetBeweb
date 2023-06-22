@@ -1,4 +1,5 @@
 from flask import request
+import bcrypt
 from DAO.connectionbdd import connection_params
 import mysql.connector
 import DAO.queries_admin
@@ -18,22 +19,21 @@ def insertAdmin():
         password = request.form['password']
         section = request.form['section']
 
-        user = User(nom, prenom, pseudo, email, telephone, section)
-        user.set_password(password)
+        password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
         with mysql.connector.connect(**connection_params) as db:
             with db.cursor() as c:
-                params = (user.nom, user.prenom, user.pseudo, user.email, user.telephone, user.get_password_hash(), user.section)
-                params2 = (user.nom, user.prenom, user.pseudo+'-f', user.email, user.telephone, user.get_password_hash(), user.section)
+                params = (nom, prenom, pseudo, email, telephone, password_hash, section)
+                params2 = (nom, prenom, pseudo+'-f', email, telephone, password_hash, section)
                 if request.form['formateur'] == 'y':
                     try:
                         c.execute(DAO.queries_formateur.insert_formateur, params2)
                         db.commit()
-                        params = (user.nom, user.prenom)
+                        params = (nom, prenom)
                         c.execute(DAO.queries_formateur.get_formateur_id, params)
                         result = c.fetchone()
                         id_formateur = result[0]
-                        params = (user.nom, user.prenom, user.pseudo, user.email, user.telephone, user.get_password_hash(), id_formateur, user.section)
+                        params = (nom, prenom, pseudo, email, telephone, password_hash, id_formateur, section)
                         c.execute(DAO.queries_admin.insert_admin_formateur_true, params)
                         db.commit()
                         return 'Insertion réussie'
@@ -57,12 +57,11 @@ def insertFormateur():
         password = request.form['password']
         section = request.form['section']
 
-        user = User(nom, prenom, pseudo, email, telephone, section)
-        user.set_password(password)
+        password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
         with mysql.connector.connect(**connection_params) as db:
             with db.cursor() as c:
-                params = (user.nom, user.prenom, user.pseudo, user.email, user.telephone, user.get_password_hash(), user.section)
+                params = (nom, prenom, pseudo, email, telephone, password_hash, section)
                 try:
                     c.execute(DAO.queries_formateur.insert_formateur, params)
                     db.commit()
@@ -84,12 +83,11 @@ def insertApprenant():
         formation = request.form['formation']
         section = request.form['section']
 
-        apprenant = Apprenant(nom, prenom, pseudo, adresse, rib, secu, email, telephone, formation, section)
-        apprenant.set_password(password)
+        password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
         with mysql.connector.connect(**connection_params) as db:
             with db.cursor() as c:
-                params = (apprenant.nom, apprenant.prenom, apprenant.pseudo, apprenant.adresse, apprenant.rib, apprenant.secu, apprenant.email, apprenant.telephone, apprenant.get_password_hash(), apprenant.formation, apprenant.section)
+                params = (nom, prenom, pseudo, adresse, rib, secu, email, telephone, password_hash, formation, section)
                 try:
                     c.execute(DAO.queries_apprenant.insert_apprenant, params)
                     db.commit()
@@ -107,12 +105,11 @@ def insertSalarie():
         password = request.form['password']
         section = request.form['section']
 
-        user = User(nom, prenom, pseudo, email, telephone, section)
-        user.set_password(password)
+        password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
         with mysql.connector.connect(**connection_params) as db:
             with db.cursor() as c:
-                params = (user.nom, user.prenom, user.pseudo, user.email, user.telephone, user.get_password_hash(), user.section)
+                params = (nom, prenom, pseudo, email, telephone, password_hash, section)
                 try:
                     c.execute(DAO.queries_salarie.insert_salarie, params)
                     db.commit()
