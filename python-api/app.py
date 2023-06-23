@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, redirect, flash
+from flask import Flask, render_template, request, session, redirect, flash, jsonify
 from controller.login import verifyLog
 import controller.user
 import controller.password_add
@@ -160,30 +160,7 @@ def get_evaluation(id_evaluation):
     else:
         return jsonify({'message': 'Evaluation not found'}), 404
 
-@app.route('/createFormation')
-def post2():
-    if controller.valide_token.has_valid_token() == 'administrateur':
-        # L'utilisateur est authentifié, permettre l'accès à la page
-        return render_template('creation_formation.html')
-    else:
-        # L'utilisateur n'est pas authentifié, rediriger vers la page de connexion
-        return 'Veuillez vous connecter pour accéder à cette page'
-
-@app.route('/selection')
-def post3():
-    if controller.valide_token.has_valid_token() == 'administrateur':
-        # L'utilisateur est authentifié, permettre l'accès à la page
-        return render_template('selection.html')
-    else:
-        # L'utilisateur n'est pas authentifié, rediriger vers la page de connexion
-        return 'Veuillez vous connecter pour accéder à cette page'
 
 if __name__ == '__main__':
-<<<<<<< HEAD
     app.static_folder = 'static'
     app.run(host='0.0.0.0', port=5000)
-
-=======
-        app.static_folder = 'static'
-        app.run(host='0.0.0.0', port=5000)
->>>>>>> origin/test
