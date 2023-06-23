@@ -6,9 +6,7 @@ import DAO.queries_admin
 import DAO.queries_formateur
 import DAO.queries_apprenant
 import DAO.queries_salarie
-import DAO.queries_formation
-
-        
+import DAO.queries_formation   
 
 def get_bloc_by_title(title):
     with mysql.connector.connect(**connection_params) as db:
@@ -57,6 +55,8 @@ def get_objetc_bloc(title):
                 for row in table:
                     objectBloc =  models.Item.Item(row[0], row[1], row[2])
                     return objectBloc
+            else:
+                return "Ce titre n'existe pas."
             
 def select_bloc():
      if request.method == 'GET':

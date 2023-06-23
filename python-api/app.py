@@ -4,7 +4,7 @@ import controller.user
 import controller.password_add
 import controller.valide_token
 import DAO.queries_eval
-
+import controller.evaluation
 
 app = Flask(__name__)
 app.secret_key = 'fondes2023'
@@ -149,14 +149,10 @@ def delete_evaluation(id_evaluation):
     evaluations = DAO.queries_eval.get_all_evaluations()
     return render_template('evaluations.html', evaluations=evaluations)
 
-@app.route('/evaluations/<int:id_evaluation>', methods=['GET'])
+@app.route('/detail_evaluations/<int:id_evaluation>', methods=['GET'])
 def get_evaluation(id_evaluation):
-    evaluation = DAO.queries_eval.get_evaluation_by_id(id_evaluation)
-    if evaluation:
-        return render_template('evaluations.html', evaluation=evaluation)
-    else:
-        return jsonify({'message': 'Evaluation not found'}), 404
-
+    evaluation = controller.evaluation.get_evaluation(id_evaluation)    
+    return render_template('detail_evaluation.html', evaluation=evaluation)
 
 if __name__ == '__main__':
         app.static_folder = 'static'

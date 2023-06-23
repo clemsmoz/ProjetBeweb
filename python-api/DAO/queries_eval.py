@@ -1,4 +1,4 @@
-get_evaluation_by_id = "SELECT id_evaluation, titreEvaluation, dateEvaluation FROM evaluation WHERE id_evaluation=%s"
+get_evaluation_by_id = "SELECT * FROM evaluation WHERE id_evaluation=%(id_evaluation)s"
 insert_evaluation = "INSERT INTO evaluation (titreEvaluation, dateEvaluation) VALUES (%s, %s)"
 update_evaluation = "UPDATE evaluation SET titreEvaluation=%s, dateEvaluation=%s WHERE id_evaluation=%s"
 delete_evaluation = "DELETE FROM evaluation WHERE id_evaluation=%s"
