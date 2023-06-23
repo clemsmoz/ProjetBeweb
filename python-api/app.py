@@ -65,7 +65,6 @@ def post():
     else:
         # L'utilisateur n'est pas authentifié, rediriger vers la page de connexion
         return 'Veuillez vous connecter pour accéder à cette page'
-    
 
 @app.route('/creaAdmin', methods=['GET', 'POST'])
 def form():
@@ -91,7 +90,6 @@ def form4():
     if request.method == 'POST':
         controller.user.insertSalarie()
         return render_template('accueil_admin.html', alerte='Salarie créé !')
-
 
 @app.route('/updatePass')
 def updatePass():
@@ -123,7 +121,6 @@ def post3():
     else:
         # L'utilisateur n'est pas authentifié, rediriger vers la page de connexion
         return 'Veuillez vous connecter pour accéder à cette page'
-
 
 @app.route('/evaluations', methods=['GET'])
 def list_all_evaluations():
@@ -162,5 +159,5 @@ def get_evaluation(id_evaluation):
 
 
 if __name__ == '__main__':
-    app.static_folder = 'static'
-    app.run(host='0.0.0.0', port=5000)
+        app.static_folder = 'static'
+        app.run(host='0.0.0.0', port=5000)
