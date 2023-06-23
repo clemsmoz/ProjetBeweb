@@ -36,4 +36,3 @@ def verify_section():
             pass
 
     return False
-    
