@@ -1,36 +1,31 @@
 {% extends "base.html" %}
 
 {% block content %}
-<html>
-<head>
-<title>Detail Évaluations</title>
+<title>Évaluations</title>
 </head>
 <body>
 
     <div class="container">
-        <h1>detail évaluations</h1>
+        <h1>Liste des évaluations</h1>
+        <a href="/createEvaluations" class="btn btn-primary mb-2">Créer une évaluation</a>
         <table class="table">
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Titre</th>
                     <th>Date d'évaluation</th>
-                    <th>Coeff de l'evaluation</th>
-                    <th>Coeff de l'item</th>
-                    <th>Note de l'évaluation</th>
-                    <th>Note de l'item</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                <tr> 
+                {% for evaluation in evaluations %}
+                <tr>
                     <td>{{ evaluation.id_evaluation }}</td>
                     <td>{{ evaluation.titreEvaluation }}</td>
                     <td>{{ evaluation.dateEvaluation }}</td>
-                    <td>{{ evaluation.coeffEval }}</td>
-                    <td>{{ evaluation.coeffItem }}</td>
-                    <td>{{ evaluation.noteEval }}</td>
-                    <td>{{ evaluation.noteItem }}</td>
+                    <td><a href="/evaluations/{{ evaluation.id_evaluation }}" class="btn btn-info">Détails</a></td>
                 </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>
