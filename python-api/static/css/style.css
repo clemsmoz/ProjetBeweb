@@ -1,0 +1,126 @@
+  li{
+    text-decoration: none;
+  }
+  .firstry{
+    display: flex;
+    justify-content: center;
+    align-content: flex-end;
+  }
+  #navigation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    padding:0;
+    margin:0;
+  }
+  .return{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    width: 300px;
+    height: 40px;
+    margin-top: 10px;
+    margin-left: 10px;
+  }
+  #menuButton{
+    width: 300px;
+    height: 40px;
+  }
+  .show {
+    display: block !important;
+  }
+  #navbar {
+    background-color: black;
+    color: antiquewhite;
+    padding-bottom: 20px;
+    border-bottom-right-radius: 10px;
+    display: none;
+    height: 100vh;
+    margin:0;
+    padding:0;
+    width: 100%;
+  }
+  .navbar-nav{
+    margin:0;
+    padding:0;
+    width:100%;
+  }
+  .btnav{
+    margin-top: 1px;
+  }
+  .btndec {
+    margin-top: 150px;
+  }
+  .admin_title{
+    text-align: center;
+  }
+  .img_section{
+    height: 50vh;
+    width: 50vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+  }
+  #img_fondes{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+  }
+  .optnav{
+    display: flex;
+    justify-content: space-between;
+  }
+  .navbtn{
+    width: 400px;
+  }
+  .navbtn2{
+    width: 250px;
+  }
+  .userlink{
+    color: #2ABAC3;
+  }
+  .userlink:hover{
+    color: #117382;
+  }
+  .user{
+    color: white;
+    background-color: #2ABAC3;
+  }
+  .user:hover{
+    background-color: #1a919a;
+  }
+  .becare{
+    color: white;
+    background-color: #E8591C;
+  }
+  .becare:hover{
+    background-color: #d24407;
+  }
+  .begreen{
+    color: white;
+    background-color: #5CB135;
+  }
+  .begreen:hover{
+    background-color: #369b07;
+  }
+  .beweb{
+    color: white;
+    background-color: #DB1342;
+  }
+  .beweb:hover{
+    background-color: #ab022c;
+  }
+  .bepro{
+    color: white;
+    background-color: #2572A4;
+  }
+  .bepro:hover{
+    background-color: #034774;
+  }
+  .add_act{
+    display: flex;
+  }
