@@ -83,7 +83,28 @@ def verifyLog():
                             token = jwt.encode(payload, secret_key, algorithm='HS256')
                             session['token'] = token
 
+<<<<<<< HEAD
                         return f'Bienvenue, {user.get_full_name()} !'
+=======
+                        if firstname_result is not None:
+                            firstname = firstname_result[0]
+
+                             # Générer le token de connexion
+                            c.execute(DAO.queries_general.select_table, {'pseudo': pseudo})
+                            table_result = c.fetchone()  
+
+                            if table_result:
+                                table_name, pseudo, section = table_result
+                                # Générer le token de connexion en utilisant le nom de la table
+                                payload = {'pseudo': pseudo, 'user_type': table_name, 'section': section}
+                                secret_key = 'fondes2023'  # Remplacez par votre clé secrète
+                                token = jwt.encode(payload, secret_key, algorithm='HS256')
+                                session['token'] = token
+
+                            return f'Bienvenue, {firstname} !'
+                        else:
+                            return 'Prénom utilisateur non disponible.'
+>>>>>>> origin/test
                     else:
                         return 'Mot de passe incorrect.'
                 else:

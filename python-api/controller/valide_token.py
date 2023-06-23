@@ -10,7 +10,11 @@ def has_valid_token():
         try:
             payload = jwt.decode(token, secret_key, algorithms=['HS256'])
             # Vérifiez les informations supplémentaires dans le payload si nécessaire
+<<<<<<< HEAD
             return payload['role']
+=======
+            return payload['user_type']
+>>>>>>> origin/test
         except jwt.ExpiredSignatureError:
             # Gérer les erreurs d'expiration du token
             pass

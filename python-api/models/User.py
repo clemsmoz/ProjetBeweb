@@ -11,6 +11,7 @@ class User:
         self.section = section
         self.password_hash = password_hash
 
+<<<<<<< HEAD
     def get_id(self):
         return self.id
 
@@ -26,6 +27,17 @@ class User:
     def set_password(self, password):
         # Hasher le mot de passe et le stocker sous forme de hachage sécurisé
         self.password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+=======
+    def get_full_name(self):
+        return f"{self.prenom} {self.nom}"
+
+    def set_password(self, password):
+        # Hasher le mot de passe et le stocker sous forme de hachage sécurisé
+        self.password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+
+    def get_password_hash(self):
+        return self.password_hash
+>>>>>>> origin/test
         
     def check_password(self, password):
         # Vérifier si le mot de passe fourni correspond au mot de passe haché stocké
