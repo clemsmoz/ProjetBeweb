@@ -8,9 +8,17 @@ def connect_to_database():
 
 def list_all_evaluations():
     with connect_to_database() as db:
-        with db.cursor(dictionary=True) as cursor:
-            cursor.execute(DAO.queries_eval.get_all_evaluations())
-            return [Evaluation(**row) for row in cursor.fetchall()]
+        with db.cursor() as c:
+            c.execute(DAO.queries_eval.get_all_evaluations)
+            rows = c.fetchall()
+            evaluations = []
+            for row in rows:
+                evaluation = Evaluation(
+                    row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7]
+                )
+                evaluations.append(evaluation)
+            return evaluations
+
 
 def get_evaluation(id_evaluation):
     with connect_to_database() as db:
