@@ -13,6 +13,8 @@
             <button type="submit" class="btn plusbtn"><i class="fa-solid fa-magnifying-glass"></i></button>
         </div>
     </div>
+</form>
+<form id="updateBloc" action="" method = "GET">
     <div class="form-group">
         <label for="select_formation">SELECTION FORMATION</label>
         <select name="sformation" class="form-control" id="sformation">
@@ -59,8 +61,10 @@
         </select>
     </div><br>
     <div class="optnav">
-        <button type="button" class="btn navbtn2" onclick="window.location.href='#'">MODIFIER</button>
-        <button type="button" class="btn navbtn2" onclick="window.location.href='#'">AJOUTER</button>
-        <button type="button" class="btn navbtn2" onclick="window.location.href='#'">SUPPRIMER</button>
+        <button type="submit" class="btn navbtn2" onclick="window.location.href='#'">MODIFIER</button>
+        <button type="submit" class="btn navbtn2" onclick="window.location.href='#'">AJOUTER</button>
+        <button type="submit" class="btn navbtn2" onclick="window.location.href='#'">SUPPRIMER</button>
     </div>
 </form>
+
+{% endblock %}
