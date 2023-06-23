@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<title>Évaluations</title>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Liste des évaluations</h1>
+        <a href="/createEvaluations" class="btn btn-primary mb-2">Créer une évaluation</a>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Titre</th>
+                    <th>Date d'évaluation</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for evaluation in evaluations %}
+                <tr>
+                    <td>{{ evaluation.id_evaluation }}</td>
+                    <td>{{ evaluation.titreEvaluation }}</td>
+                    <td>{{ evaluation.dateEvaluation }}</td>
+                    <td><a href="/evaluations/{{ evaluation.id_evaluation }}" class="btn btn-info">Détails</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% include "navbar.html" %}
+</body>
+</html>
+{% endblock %}
