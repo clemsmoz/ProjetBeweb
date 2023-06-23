@@ -17,8 +17,8 @@ get_item_by_module = "SELECT * FROM item WHERE id_module_FK = %(id)s"
 
 get_table_by_title = "SELECT 'formation' as bloc FROM formation WHERE titreFormation = %(title)s UNION SELECT 'activite' as bloc FROM activite WHERE titreActivite = %(title)s UNION SELECT 'cp' as bloc FROM cp WHERE titreCp = %(title)s UNION SELECT 'module' as bloc FROM module WHERE titreModule = %(title)s UNION SELECT 'item' as bloc FROM item WHERE titreItem = %(title)s;"
 
-get_formation_by_title = "SELECT * FROM formation WHERE title = %(title)s;"
-get_activite_by_title = "SELECT * FROM activite WHERE title = %(title)s;"
-get_cp_by_title = "SELECT * FROM cp WHERE title = %(title)s;"
-get_module_by_title = "SELECT * FROM module WHERE title = %(title)s;"
-get_item_by_title = "SELECT * FROM item WHERE title = %(title)s;"
+get_formation_by_title = "SELECT * FROM formation WHERE titreFormation = %(title)s;"
+get_activite_by_title = "SELECT * FROM activite WHERE titreActivite = %(title)s;"
+get_cp_by_title = "SELECT * FROM cp WHERE titreCp = %(title)s;"
+get_module_by_title = "SELECT * FROM module WHERE titreModule = %(title)s;"
+get_item_by_title = "SELECT * FROM item WHERE titreItem = %(title)s;"

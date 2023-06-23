@@ -1,9 +1,9 @@
 from models.Formation import Formation
 
 class Activite(Formation):
-    def __init__(self, id, titre, contenu, formation):
+    def __init__(self, id, titre, contenu, idFK):
         super().__init__(id, titre, contenu)
-        self.formation = formation
+        self.idFK = idFK
 
     def get_formation(self):
-        return self.formation
+        return self.idFK

@@ -5,6 +5,7 @@ import controller.password_add
 import controller.valide_token
 import DAO.queries_eval
 import controller.evaluation
+import controller.select_menu
 
 app = Flask(__name__)
 app.secret_key = 'fondes2023'
@@ -153,6 +154,18 @@ def delete_evaluation(id_evaluation):
 def get_evaluation(id_evaluation):
     evaluation = controller.evaluation.get_evaluation(id_evaluation)    
     return render_template('detail_evaluation.html', evaluation=evaluation)
+
+@app.route('/selectBloc')
+def selectbloc():
+    result = controller.select_menu.select_bloc()
+    if result :
+        bloc = result[0]
+        objBloc = result[1]
+        return render_template('liste_formation.html', bloc=bloc, objBloc=objBloc)
+    else:
+        # L'utilisateur n'est pas authentifié, rediriger vers la page de connexion
+        return "ce titre n'existe pas"
+
 
 if __name__ == '__main__':
         app.static_folder = 'static'
