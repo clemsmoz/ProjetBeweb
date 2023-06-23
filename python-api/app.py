@@ -124,7 +124,7 @@ def post3():
 
 @app.route('/evaluations', methods=['GET'])
 def list_all_evaluations():
-    evaluations = DAO.queries_eval.get_all_evaluations()
+    evaluations = controller.evaluation.list_all_evaluations()
     return render_template('evaluations.html', evaluations=evaluations)
 
 @app.route('/createEvaluations', methods=['POST'])
