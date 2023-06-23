@@ -70,22 +70,9 @@ def verifyLog():
                     hashed_password = result[0]
 
                     if bcrypt.checkpw(password.encode('utf-8'), hashed_password.encode('utf-8')):
-                        user = get_object(pseudo)
-                        # session['user'] = user
-                        # Générer le token de connexion
-                        c.execute(DAO.queries_general.select_infos, {'pseudo': pseudo})
-                        table_result = c.fetchone()  
-                        if table_result:
-                            role, pseudo, section = table_result
-                            # Générer le token de connexion en utilisant le nom de la table
-                            payload = {'pseudo': pseudo, 'role': role, 'section': section}
-                            secret_key = 'fondes2023'  # Remplacez par votre clé secrète
-                            token = jwt.encode(payload, secret_key, algorithm='HS256')
-                            session['token'] = token
+                        c.execute(DAO.queries_general.get_user_firstname, {'pseudo': pseudo})
+                        firstname_result = c.fetchone()
 
-<<<<<<< HEAD
-                        return f'Bienvenue, {user.get_full_name()} !'
-=======
                         if firstname_result is not None:
                             firstname = firstname_result[0]
 
@@ -104,7 +91,6 @@ def verifyLog():
                             return f'Bienvenue, {firstname} !'
                         else:
                             return 'Prénom utilisateur non disponible.'
->>>>>>> origin/test
                     else:
                         return 'Mot de passe incorrect.'
                 else:

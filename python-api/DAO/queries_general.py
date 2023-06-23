@@ -4,13 +4,16 @@ get_user = "SELECT nomAdmin, prenomAdmin, pseudoAdmin, telephoneAdmin, emailAdmi
 
 get_user_firstname = "SELECT CASE WHEN EXISTS (SELECT prenomAdmin FROM administrateur WHERE pseudoAdmin = %(pseudo)s) THEN (SELECT prenomAdmin FROM administrateur WHERE pseudoAdmin = %(pseudo)s) WHEN EXISTS (SELECT prenomSalarie FROM salarie WHERE pseudoSalarie = %(pseudo)s) THEN (SELECT prenomSalarie FROM salarie WHERE pseudoSalarie = %(pseudo)s) WHEN EXISTS (SELECT prenomApprenant FROM apprenant WHERE pseudoApprenant = %(pseudo)s) THEN (SELECT prenomApprenant FROM apprenant WHERE pseudoApprenant = %(pseudo)s) WHEN EXISTS (SELECT prenomFormateur FROM formateur WHERE pseudoFormateur = %(pseudo)s) THEN (SELECT prenomFormateur FROM formateur WHERE pseudoFormateur = %(pseudo)s) ELSE NULL END AS prenom_utilisateur;"
 
-<<<<<<< HEAD
+
 select_table = "SELECT 'administrateur' AS role FROM administrateur WHERE pseudoAdmin = %(pseudo)s UNION ALL SELECT 'salarie' AS table_name FROM salarie WHERE pseudoSalarie = %(pseudo)s UNION ALL SELECT 'apprenant' AS table_name FROM apprenant WHERE pseudoApprenant = %(pseudo)s UNION ALL SELECT 'formateur' AS table_name FROM formateur WHERE pseudoFormateur = %(pseudo)s;"
 
 select_infos = "SELECT 'administrateur' AS role, pseudoAdmin AS pseudo, id_section_FK AS section FROM administrateur WHERE pseudoAdmin = %(pseudo)s UNION ALL SELECT 'salarie' AS role, pseudoSalarie AS pseudo, id_section_FK AS section FROM salarie WHERE pseudoSalarie = %(pseudo)s UNION ALL SELECT 'apprenant' AS role, pseudoApprenant AS pseudo, id_section_FK AS section FROM apprenant WHERE pseudoApprenant = %(pseudo)s UNION ALL SELECT 'formateur' AS role, pseudoFormateur AS pseudo, id_section_FK AS section FROM formateur WHERE pseudoFormateur = %(pseudo)s;"
-=======
+
 select_table = "SELECT 'administrateur' AS table_name, pseudoAdmin AS pseudo, id_section_FK AS section FROM administrateur WHERE pseudoAdmin = %(pseudo)s UNION ALL SELECT 'salarie' AS table_name, pseudoSalarie AS pseudo, id_section_FK AS section FROM salarie WHERE pseudoSalarie = %(pseudo)s UNION ALL SELECT 'apprenant' AS table_name, pseudoApprenant AS pseudo, id_section_FK AS section FROM apprenant WHERE pseudoApprenant = %(pseudo)s UNION ALL SELECT 'formateur' AS table_name, pseudoFormateur AS pseudo, id_section_FK AS section FROM formateur WHERE pseudoFormateur = %(pseudo)s;"
->>>>>>> origin/test
+
+select_table = "SELECT 'administrateur' AS role FROM administrateur WHERE pseudoAdmin = %(pseudo)s UNION ALL SELECT 'salarie' AS table_name FROM salarie WHERE pseudoSalarie = %(pseudo)s UNION ALL SELECT 'apprenant' AS table_name FROM apprenant WHERE pseudoApprenant = %(pseudo)s UNION ALL SELECT 'formateur' AS table_name FROM formateur WHERE pseudoFormateur = %(pseudo)s;"
+
+select_infos = "SELECT 'administrateur' AS role, pseudoAdmin AS pseudo, id_section_FK AS section FROM administrateur WHERE pseudoAdmin = %(pseudo)s UNION ALL SELECT 'salarie' AS role, pseudoSalarie AS pseudo, id_section_FK AS section FROM salarie WHERE pseudoSalarie = %(pseudo)s UNION ALL SELECT 'apprenant' AS role, pseudoApprenant AS pseudo, id_section_FK AS section FROM apprenant WHERE pseudoApprenant = %(pseudo)s UNION ALL SELECT 'formateur' AS role, pseudoFormateur AS pseudo, id_section_FK AS section FROM formateur WHERE pseudoFormateur = %(pseudo)s;"
 
 
 update_password_admin = "UPDATE administrateur SET passwordAdmin = %(hashed_password)s WHERE pseudoAdmin = %(pseudo)s;"
