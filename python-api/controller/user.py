@@ -94,7 +94,7 @@ def insertApprenant():
                     print("Failed to execute query: {}".format(error))
 
 def insertSalarie():
-     if request.method == 'POST':
+    if request.method == 'POST':
         prenom = request.form['firstName']
         nom = request.form['lastName']
         pseudo = request.form['pseudo']

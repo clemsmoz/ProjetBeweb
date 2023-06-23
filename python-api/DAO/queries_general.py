@@ -8,6 +8,9 @@ select_table = "SELECT 'administrateur' AS role FROM administrateur WHERE pseudo
 
 select_infos = "SELECT 'administrateur' AS role, pseudoAdmin AS pseudo, id_section_FK AS section FROM administrateur WHERE pseudoAdmin = %(pseudo)s UNION ALL SELECT 'salarie' AS role, pseudoSalarie AS pseudo, id_section_FK AS section FROM salarie WHERE pseudoSalarie = %(pseudo)s UNION ALL SELECT 'apprenant' AS role, pseudoApprenant AS pseudo, id_section_FK AS section FROM apprenant WHERE pseudoApprenant = %(pseudo)s UNION ALL SELECT 'formateur' AS role, pseudoFormateur AS pseudo, id_section_FK AS section FROM formateur WHERE pseudoFormateur = %(pseudo)s;"
 
+select_table = "SELECT 'administrateur' AS role FROM administrateur WHERE pseudoAdmin = %(pseudo)s UNION ALL SELECT 'salarie' AS table_name FROM salarie WHERE pseudoSalarie = %(pseudo)s UNION ALL SELECT 'apprenant' AS table_name FROM apprenant WHERE pseudoApprenant = %(pseudo)s UNION ALL SELECT 'formateur' AS table_name FROM formateur WHERE pseudoFormateur = %(pseudo)s;"
+
+
 
 update_password_admin = "UPDATE administrateur SET passwordAdmin = %(hashed_password)s WHERE pseudoAdmin = %(pseudo)s;"
 update_password_formateur = "UPDATE formateur SET passwordFormateur = %(hashed_password)s WHERE pseudoFormateur = %(pseudo)s;"
