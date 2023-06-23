@@ -6,8 +6,6 @@ import DAO.queries_admin
 import DAO.queries_formateur
 import DAO.queries_apprenant
 import DAO.queries_salarie
-from models.User import User
-from models.Apprenant import Apprenant
 
 def insertAdmin():
     if request.method == 'POST':
