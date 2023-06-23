@@ -1,15 +1,17 @@
-from flask import Flask, render_template, request, session, redirect, flash
+from flask import Flask, render_template, request, session, redirect, flash, jsonify
 from controller.login import verifyLog
 import controller.user
 import controller.password_add
 import controller.valide_token
+import DAO.queries_eval
+
 
 app = Flask(__name__)
 app.secret_key = 'fondes2023'
 
 @app.route('/')
 def log():
-     return render_template('login.html')
+    return render_template('login.html')
 
 @app.route('/verifyLogin', methods=['GET'])
 def login():
@@ -93,16 +95,16 @@ def form4():
 
 @app.route('/updatePass')
 def updatePass():
-     return render_template('update_pass.html')
+    return render_template('update_pass.html')
 
 
 @app.route('/updatePassword', methods=['POST'])
 def updatePassword():
     if request.method == 'POST':
-         message = controller.password_add.updateThisPassword(request.method)
-         controller.password_add.updateThisPassword(request.method)
-         flash(message)
-         return redirect('/')
+        message = controller.password_add.updateThisPassword(request.method)
+        controller.password_add.updateThisPassword(request.method)
+        flash(message)
+        return redirect('/')
 
 @app.route('/createFormation')
 def post2():
@@ -122,6 +124,43 @@ def post3():
         # L'utilisateur n'est pas authentifié, rediriger vers la page de connexion
         return 'Veuillez vous connecter pour accéder à cette page'
 
+
+@app.route('/evaluations', methods=['GET'])
+def list_all_evaluations():
+    evaluations = DAO.queries_eval.get_all_evaluations()
+    return render_template('evaluations.html', evaluations=evaluations)
+
+@app.route('/createEvaluations', methods=['POST'])
+def create_evaluation():
+    titre = request.json.get('titre')
+    date_evaluation = request.json.get('date_evaluation')
+    DAO.queries_eval.insert_evaluation(titre, date_evaluation)
+    evaluations = DAO.queries_eval.get_all_evaluations()
+    return render_template('create_evaluations.html', evaluations=evaluations), 201
+
+@app.route('/evaluations/<int:id_evaluation>', methods=['PUT'])
+def update_evaluation(id_evaluation):
+    titre = request.json.get('titre')
+    date_evaluation = request.json.get('date_evaluation')
+    DAO.queries_eval.update_evaluation(id_evaluation, titre, date_evaluation)
+    evaluations = DAO.queries_eval.get_all_evaluations()
+    return render_template('evaluations.html', evaluations=evaluations)
+
+@app.route('/evaluations/<int:id_evaluation>', methods=['DELETE'])
+def delete_evaluation(id_evaluation):
+    DAO.queries_eval.delete_evaluation(id_evaluation)
+    evaluations = DAO.queries_eval.get_all_evaluations()
+    return render_template('evaluations.html', evaluations=evaluations)
+
+@app.route('/evaluations/<int:id_evaluation>', methods=['GET'])
+def get_evaluation(id_evaluation):
+    evaluation = DAO.queries_eval.get_evaluation_by_id(id_evaluation)
+    if evaluation:
+        return render_template('evaluations.html', evaluation=evaluation)
+    else:
+        return jsonify({'message': 'Evaluation not found'}), 404
+
+
 if __name__ == '__main__':
-        app.static_folder = 'static'
-        app.run(host='0.0.0.0', port=5000)
+    app.static_folder = 'static'
+    app.run(host='0.0.0.0', port=5000)
