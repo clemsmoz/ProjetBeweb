@@ -1,9 +1,14 @@
-from flask import Flask, render_template, request, session, redirect, flash, jsonify
+from flask import Flask, render_template, request, session, redirect, flash, jsonify, url_for
 from controller.login import verifyLog
 import controller.user
 import controller.password_add
 import controller.valide_token
 import DAO.queries_eval
+import DAO.queries_activite
+import DAO.queries_cp
+import controller.evaluation
+import controller.activite
+import controller.cp
 
 
 app = Flask(__name__)
@@ -65,7 +70,6 @@ def post():
     else:
         # L'utilisateur n'est pas authentifié, rediriger vers la page de connexion
         return 'Veuillez vous connecter pour accéder à cette page'
-    
 
 @app.route('/creaAdmin', methods=['GET', 'POST'])
 def form():
@@ -91,7 +95,6 @@ def form4():
     if request.method == 'POST':
         controller.user.insertSalarie()
         return render_template('accueil_admin.html', alerte='Salarie créé !')
-
 
 @app.route('/updatePass')
 def updatePass():
@@ -124,43 +127,61 @@ def post3():
         # L'utilisateur n'est pas authentifié, rediriger vers la page de connexion
         return 'Veuillez vous connecter pour accéder à cette page'
 
-
 @app.route('/evaluations', methods=['GET'])
 def list_all_evaluations():
-    evaluations = DAO.queries_eval.get_all_evaluations()
+    evaluations = controller.evaluation.list_all_evaluations()
     return render_template('evaluations.html', evaluations=evaluations)
 
-@app.route('/createEvaluations', methods=['POST'])
+@app.route('/createEvaluations', methods=['GET', 'POST'])
 def create_evaluation():
-    titre = request.json.get('titre')
-    date_evaluation = request.json.get('date_evaluation')
-    DAO.queries_eval.insert_evaluation(titre, date_evaluation)
-    evaluations = DAO.queries_eval.get_all_evaluations()
-    return render_template('create_evaluations.html', evaluations=evaluations), 201
+    if request.method == 'POST':
+        titreEvaluation = request.form['titreEvaluation']
+        dateEvaluation = request.form['dateEvaluation']
+        coeffItem = request.form['coeffItem']
+        coeffEval = request.form['coeffEval']
+        noteEval = request.form['noteEval']
+        noteItem = request.form['noteItem']
+        controller.evaluation.create_evaluation()
+        evaluations = controller.evaluation.get_all_evaluations()
+        return redirect(url_for('evaluations'))
+    else:
+        return render_template('create_evaluations.html')
 
+    
 @app.route('/evaluations/<int:id_evaluation>', methods=['PUT'])
 def update_evaluation(id_evaluation):
     titre = request.json.get('titre')
     date_evaluation = request.json.get('date_evaluation')
     DAO.queries_eval.update_evaluation(id_evaluation, titre, date_evaluation)
-    evaluations = DAO.queries_eval.get_all_evaluations()
+    evaluations =controller.evaluation.update_evaluation(id_evaluation, titreEvaluation, dateEvaluation)
     return render_template('evaluations.html', evaluations=evaluations)
 
 @app.route('/evaluations/<int:id_evaluation>', methods=['DELETE'])
 def delete_evaluation(id_evaluation):
     DAO.queries_eval.delete_evaluation(id_evaluation)
-    evaluations = DAO.queries_eval.get_all_evaluations()
+    evaluations = controller.evaluation.delete_evaluation(id_evaluation)
     return render_template('evaluations.html', evaluations=evaluations)
 
-@app.route('/evaluations/<int:id_evaluation>', methods=['GET'])
+@app.route('/detail_evaluations/<int:id_evaluation>', methods=['GET'])
 def get_evaluation(id_evaluation):
-    evaluation = DAO.queries_eval.get_evaluation_by_id(id_evaluation)
-    if evaluation:
-        return render_template('evaluations.html', evaluation=evaluation)
-    else:
-        return jsonify({'message': 'Evaluation not found'}), 404
+    evaluation = controller.evaluation.get_evaluation(id_evaluation)  
+    return render_template('detail_evaluation.html', evaluation=evaluation)
+
+@app.route('/competence', methods=['GET'])
+def get_all_activite():
+    activites = controller.activite.get_all_activite()
+    return render_template('competence.html', activites=activites)
+
+@app.route('/competence', methods=['GET'])
+def get_all_cp():
+    Cps = controller.cp.get_all_cp()
+    return render_template('competence.html', Cps=Cps)
+
+
+
+
 
 
 if __name__ == '__main__':
-    app.static_folder = 'static'
-    app.run(host='0.0.0.0', port=5000)
+        app.static_folder = 'static'
+        app.run(host='0.0.0.0', port=5000)

@@ -1,12 +1,38 @@
 {% extends "base.html" %}
 
 {% block content %}
-<title> Création Évaluations</title>
-</head>
-<body>
+<title>Création évaluations</title>
+<h1>Création évaluations</h1>
+<button type="button" class="btn navbtn" onclick="window.location.href='/evaluations'">Retour</button>
 
-    
-    {% include "navbar.html" %}
-</body>
-</html>
+<form method="POST">
+    <div class="form-group">
+        <label for="titreEvaluation">Titre :</label>
+        <input type="text" class="form-control" id="titreEvaluation" name="titreEvaluation">
+    </div>
+    <div class="form-group">
+        <label for="dateEvaluation">Date d'évaluation :</label>
+        <input type="date" class="form-control" id="dateEvaluation" name="dateEvaluation">
+    </div>
+    <div class="form-group">
+        <label for="coeffItem">Coefficient des items :</label>
+        <input type="number" class="form-control" id="coeffItem" name="coeffItem">
+    </div>
+    <div class="form-group">
+        <label for="coeffEval">Coefficient de l'évaluation :</label>
+        <input type="number" class="form-control" id="coeffEval" name="coeffEval">
+    </div>
+    <div class="form-group">
+        <label for="noteEval">Note de l'évaluation :</label>
+        <input type="number" class="form-control" id="noteEval" name="noteEval">
+    </div>
+    <div class="form-group">
+        <label for="noteItem">Note des items :</label>
+        <input type="number" class="form-control" id="noteItem" name="noteItem">
+    </div>
+    <button type="submit" class="btn btn-primary">Créer</button>
+</form>
+
+{% include "navbar.html" %}
+
 {% endblock %}

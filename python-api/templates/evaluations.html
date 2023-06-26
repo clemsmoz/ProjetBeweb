@@ -23,7 +23,7 @@
                     <td>{{ evaluation.id_evaluation }}</td>
                     <td>{{ evaluation.titreEvaluation }}</td>
                     <td>{{ evaluation.dateEvaluation }}</td>
-                    <td><a href="/evaluations/{{ evaluation.id_evaluation }}" class="btn btn-info">Détails</a></td>
+                    <td><button class="btn btn-block btnav" onclick="window.location.href='/detail_evaluations/{{ evaluation.id_evaluation }}'">Détails</button></td>
                 </tr>
                 {% endfor %}
             </tbody>

@@ -5,4 +5,5 @@ mysql-connector-python
 bcrypt
 flask_session
 PyJWT
-watchdog    
+watchdog   
+requests 

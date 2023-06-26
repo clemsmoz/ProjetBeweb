@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block content %}
+<html>
+<head>
+<title>Compétences</title>
+<script type="text/javascript">
+    function toggleActivitesTable() {
+        var table = document.getElementById("activites-table");
+        if (table.style.display === "none") {
+            table.style.display = "block";
+        } else {
+            table.style.display = "none";
+        }
+    }
+
+    function toggleCpTable() {
+        var table = document.getElementById("cp-table");
+        if (table.style.display === "none") {
+            table.style.display = "block";
+        } else {
+            table.style.display = "none";
+        }
+    }
+</script>
+</head>
+<body>
+<button type="button" class="btn navbtn" onclick="window.location.href='/accueil'">Retour</button>
+    <div class="container">
+        <h1>Liste des compétence </h1>
+        <h2>Liste des activites <button type="button" class="btn btn-primary" onclick="toggleActivitesTable()">Cacher/Montrer</button></h2>
+        <table id="activites-table" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Titre</th>
+                    <th>Résumé</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for activite in activites %}
+                <tr>
+                    <td>{{ activite.id_activite }}</td>
+                    <td>{{ activite.titreActivite }}</td>
+                    <td>{{ activite.resumeActivite }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h2>Liste des CP <button type="button" class="btn btn-primary" onclick="toggleCpTable()">Cacher/Montrer</button></h2>
+        <table id="cp-table" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Titre</th>
+                    <th>Contenu</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cp in Cps %}
+                <tr>
+                    <td>{{ cp.id_cp }}</td>
+                    <td>{{ cp.titreCp }}</td>
+                    <td>{{ cp.contenuCp }}</td>
+                </tr>
+                {% endfor %}
+        </table>
+    </div>
+
+
+{% include "navbar.html" %}
+
+</body>
+</html>
+{% endblock %}
