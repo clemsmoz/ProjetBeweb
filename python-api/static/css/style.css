@@ -124,3 +124,12 @@ li{
 .add_act{
   display: flex;
 }
+.form-control {
+  border-radius: 20px;
+  border: none;
+  background-color: #f5f5f5;
+  padding: 10px;
+  font-size: 16px;
+  width: 100%;
+  margin-bottom: 20px;
+}

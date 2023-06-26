@@ -6,9 +6,13 @@ import controller.valide_token
 import DAO.queries_eval
 import DAO.queries_activite
 import DAO.queries_cp
+import DAO.queries_item
+import DAO.queries_module
 import controller.evaluation
 import controller.activite
 import controller.cp
+import controller.item
+import controller.module
 
 
 app = Flask(__name__)
@@ -176,6 +180,16 @@ def get_all_activite():
 def get_all_cp():
     Cps = controller.cp.get_all_cp()
     return render_template('competence.html', Cps=Cps)
+
+@app.route('/competence', methods=['GET'])
+def get_all_item():
+    items = controller.item.get_all_item()
+    return render_template('competence.html', items=items)
+
+@app.route('/competence', methods=['GET'])
+def get_all_module():
+    modules = controller.module.get_all_module()
+    return render_template('competence.html', modules=modules)
 
 
 
