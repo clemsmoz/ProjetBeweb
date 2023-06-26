@@ -135,23 +135,20 @@ def post3():
 def list_all_evaluations():
     evaluations = controller.evaluation.list_all_evaluations()
     return render_template('evaluations.html', evaluations=evaluations)
-
 @app.route('/createEvaluations', methods=['GET', 'POST'])
 def create_evaluation():
     if request.method == 'POST':
-        titreEvaluation = request.form['titreEvaluation']
-        dateEvaluation = request.form['dateEvaluation']
-        coeffItem = request.form['coeffItem']
-        coeffEval = request.form['coeffEval']
-        noteEval = request.form['noteEval']
-        noteItem = request.form['noteItem']
         controller.evaluation.create_evaluation()
-        evaluations = controller.evaluation.get_all_evaluations()
-        return redirect(url_for('evaluations'))
+        evaluations = controller.evaluation.list_all_evaluations()
+        return render_template('evaluations.html', evaluations=evaluations)
     else:
-        return render_template('create_evaluations.html')
+        result = controller.activite.get_all_activite()
+        activites = result[0]
+        Cps = result[1]
+        items = result[2]
+        modules = result[3]
+        return render_template('create_evaluations.html', activites=activites, Cps=Cps, items=items, modules=modules)
 
-    
 @app.route('/evaluations/<int:id_evaluation>', methods=['PUT'])
 def update_evaluation(id_evaluation):
     titre = request.json.get('titre')
@@ -173,26 +170,12 @@ def get_evaluation(id_evaluation):
 
 @app.route('/competence', methods=['GET'])
 def get_all_activite():
-    activites = controller.activite.get_all_activite()
-    return render_template('competence.html', activites=activites)
-
-@app.route('/competence', methods=['GET'])
-def get_all_cp():
-    Cps = controller.cp.get_all_cp()
-    return render_template('competence.html', Cps=Cps)
-
-@app.route('/competence', methods=['GET'])
-def get_all_item():
-    items = controller.item.get_all_item()
-    return render_template('competence.html', items=items)
-
-@app.route('/competence', methods=['GET'])
-def get_all_module():
-    modules = controller.module.get_all_module()
-    return render_template('competence.html', modules=modules)
-
-
-
+    result = controller.activite.get_all_activite()
+    activites = result[0]
+    Cps = result[1]
+    items = result[2]
+    modules = result[3]
+    return render_template('competence.html', activites=activites, Cps=Cps, items=items, modules=modules)
 
 
 

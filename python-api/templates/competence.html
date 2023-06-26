@@ -73,9 +73,9 @@
             <tbody>
                 {% for activite in activites %}
                 <tr>
-                    <td>{{ activite.id_activite }}</td>
-                    <td>{{ activite.titreActivite }}</td>
-                    <td>{{ activite.resumeActivite }}</td>
+                    <td>{{ activite.id }}</td>
+                    <td>{{ activite.titre }}</td>
+                    <td>{{ activite.contenu }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -92,9 +92,9 @@
             <tbody>
                 {% for cp in Cps %}
                 <tr>
-                    <td>{{ cp.id_cp }}</td>
-                    <td>{{ cp.titreCp }}</td>
-                    <td>{{ cp.contenuCp }}</td>
+                    <td>{{ cp.id }}</td>
+                    <td>{{ cp.titre }}</td>
+                    <td>{{ cp.contenu }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -111,9 +111,9 @@
             <tbody>
                 {% for item in items %}
                 <tr>
-                    <td>{{ item.id_item }}</td>
-                    <td>{{ item.titreItem }}</td>
-                    <td>{{ item.contenuItem }}</td>
+                    <td>{{ item.id}}</td>
+                    <td>{{ item.titre }}</td>
+                    <td>{{ item.contenu }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -130,9 +130,9 @@
             <tbody>
                 {%for module in modules %}
                 <tr>
-                    <td>{{ module.id_module }}</td>
-                    <td>{{ module.titreModule }}</td>
-                    <td>{{ module.contenuModule }}</td>
+                    <td>{{ module.id }}</td>
+                    <td>{{ module.titre }}</td>
+                    <td>{{ module.contenu }}</td>
                 </tr>
                 {%endfor %}
             </tbody>
@@ -142,3 +142,7 @@
 </body>
 </html>
 {% endblock %}
+
+
+
+

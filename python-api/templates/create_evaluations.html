@@ -1,11 +1,127 @@
 {% extends "base.html" %}
 
 {% block content %}
-<title>Création évaluations</title>
-<h1>Création évaluations</h1>
-<button type="button" class="btn navbtn" onclick="window.location.href='/evaluations'">Retour</button>
+<html>
+<head>
+<title>Création d'une évaluation</title>
+<script type="text/javascript">
+    function toggleActivitesTable() {
+        const table = document.getElementById("activites-table");
+        if (table.style.display === "none") {
+            table.style.display = "block";
+        } else {
+            table.style.display = "none";
+        }
+    }
 
-<form method="POST">
+    function toggleCpTable() {
+        const table = document.getElementById("cp-table");
+        if (table.style.display === "none") {
+            table.style.display = "block";
+        } else {
+            table.style.display = "none";
+        }
+    }
+
+    function toggleItemsTable() {
+        const table = document.getElementById("items-table");
+        if (table.style.display === "none") {
+            table.style.display = "block";
+        } else {
+            table.style.display = "none";
+        }
+    }
+
+    function toggleModulesTable() {
+        const table = document.getElementById("modules-table");
+        if (table.style.display === "none") {
+            table.style.display = "block";
+        } else {
+            table.style.display = "none";
+        }
+    }
+
+    function handleCheckboxChange(id, type) {
+        const checkbox = document.getElementById(type + "-" + id);
+        const selectedList = document.getElementById("selected-" + type + "-list");
+
+        if (checkbox.checked) {
+            const listItem = document.createElement("li");
+            listItem.textContent = checkbox.value;
+            listItem.id = type + "-selected-" + id;
+            listItem.classList.add("list-group-item");
+            selectedList.appendChild(listItem);
+        } else {
+            const listItem = document.getElementById(type + "-selected-" + id);
+            if (listItem) {
+                selectedList.removeChild(listItem);
+            }
+        }
+
+        updateSelectedInputs();
+    }
+
+    function updateSelectedInputs() {
+        const activitesCheckboxes = document.querySelectorAll("#activites-table tbody input[type='checkbox']");
+        const cpsCheckboxes = document.querySelectorAll("#cp-table tbody input[type='checkbox']");
+        const itemsCheckboxes = document.querySelectorAll("#items-table tbody input[type='checkbox']");
+        const modulesCheckboxes = document.querySelectorAll("#modules-table tbody input[type='checkbox']");
+
+        const selectedActivites = [];
+        activitesCheckboxes.forEach(function (checkbox) {
+            if (checkbox.checked) {
+                selectedActivites.push(checkbox.id.split("-")[1]);
+            }
+        });
+        document.getElementById("selected-activites-input").value = selectedActivites.join(",");
+        updateSelectedList(selectedActivites, "activites");
+
+        const selectedCps = [];
+        cpsCheckboxes.forEach(function (checkbox) {
+            if (checkbox.checked) {
+                selectedCps.push(checkbox.id.split("-")[1]);
+            }
+        });
+        document.getElementById("selected-cps-input").value = selectedCps.join(",");
+        updateSelectedList(selectedCps, "cps");
+
+        const selectedItems = [];
+        itemsCheckboxes.forEach(function (checkbox) {
+            if (checkbox.checked) {
+                selectedItems.push(checkbox.id.split("-")[1]);
+            }
+        });
+        document.getElementById("selected-items-input").value = selectedItems.join(",");
+        updateSelectedList(selectedItems, "items");
+
+        const selectedModules = [];
+        modulesCheckboxes.forEach(function (checkbox) {
+            if (checkbox.checked) {
+                selectedModules.push(checkbox.id.split("-")[1]);
+            }
+        });
+        document.getElementById("selected-modules-input").value = selectedModules.join(",");
+        updateSelectedList(selectedModules, "modules");
+    }
+
+    function updateSelectedList(selectedItems, type) {
+        const selectedList = document.getElementById("selected-" + type + "-list");
+        selectedList.innerHTML = "";
+
+        selectedItems.forEach(function (item) {
+            const listItem = document.createElement("li");
+            listItem.textContent = item;
+            listItem.id = type + "-selected-" + item;
+            listItem.classList.add("list-group-item");
+            selectedList.appendChild(listItem);
+        });
+    }
+</script>
+</head>
+<body>
+    <button type="button" class="btn navbtn" onclick="window.location.href='/evaluations'">Retour</button>
+
+<form action="/createEvaluations" method="POST">
     <div class="form-group">
         <label for="titreEvaluation">Titre :</label>
         <input type="text" class="form-control" id="titreEvaluation" name="titreEvaluation">
@@ -30,9 +146,161 @@
         <label for="noteItem">Note des items :</label>
         <input type="number" class="form-control" id="noteItem" name="noteItem">
     </div>
-    <button type="submit" class="btn btn-primary">Créer</button>
+
+    <div class="container">
+        <h1>Liste des compétences</h1>
+        <input type="text" id="search-input" class="form-control" placeholder="Rechercher..." oninput="searchTable()">
+        <h2>Liste des activités <button type="button" class="btn btn-primary" onclick="toggleActivitesTable()">Cacher/Montrer</button></h2>
+        <table id="activites-table" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Titre</th>
+                    <th>Résumé</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for activite in activites %}
+                <tr>
+                    <td>{{ activite.id }}</td>
+                    <td>{{ activite.titre }}</td>
+                    <td>{{ activite.contenu }}</td>
+                    <td>
+                        <input type="checkbox" id="activite-{{ activite.id }}" value="{{ activite.titre }}"
+                            onchange="handleCheckboxChange('{{ activite.id }}', 'activites'); updateSelectedInputs();">
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h2>Liste des CP <button type="button" class="btn btn-primary" onclick="toggleCpTable()">Cacher/Montrer</button></h2>
+        <table id="cp-table" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Titre</th>
+                    <th>Contenu</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cp in Cps %}
+                <tr>
+                    <td>{{ cp.id }}</td>
+                    <td>{{ cp.titre }}</td>
+                    <td>{{ cp.contenu }}</td>
+                    <td>
+                        <input type="checkbox" id="cp-{{ cp.id }}" value="{{ cp.titre }}"
+                            onchange="handleCheckboxChange('{{ cp.id }}', 'cps'); updateSelectedInputs();">
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h2>Liste des items <button type="button" class="btn btn-primary" onclick="toggleItemsTable()">Cacher/Montrer</button></h2>
+        <table id="items-table" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Titre</th>
+                    <th>Contenu</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.titre }}</td>
+                    <td>{{ item.contenu }}</td>
+                    <td>
+                        <input type="checkbox" id="item-{{ item.id }}" value="{{ item.titre }}"
+                            onchange="handleCheckboxChange('{{ item.id }}', 'items'); updateSelectedInputs();">
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h2>Liste des modules <button type="button" class="btn btn-primary" onclick="toggleModulesTable()">Cacher/Montrer</button></h2>
+        <table id="modules-table" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Titre</th>
+                    <th>Contenu</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for module in modules %}
+                <tr>
+                    <td>{{ module.id }}</td>
+                    <td>{{ module.titre }}</td>
+                    <td>{{ module.contenu }}</td>
+                    <td>
+                        <input type="checkbox" id="module-{{ module.id }}" value="{{ module.titre }}"
+                            onchange="handleCheckboxChange('{{ module.id }}', 'modules'); updateSelectedInputs();">
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    <!-- Champs de formulaire cachés pour les éléments sélectionnés -->
+    <input type="hidden" name="activites" id="selected-activites-input">
+    <input type="hidden" name="cps" id="selected-cps-input">
+    <input type="hidden" name="items" id="selected-items-input">
+    <input type="hidden" name="modules" id="selected-modules-input">
+
+    <button type="submit" class="btn btn-primary">Envoyer</button>
+    
 </form>
 
-{% include "navbar.html" %}
+<h2>Liste des éléments sélectionnés :</h2>
+<h3>Activités :</h3>
+<ul id="selected-activites-list" class="list-group"></ul>
 
+<h3>CP :</h3>
+<ul id="selected-cps-list" class="list-group"></ul>
+
+<h3>Items :</h3>
+<ul id="selected-items-list" class="list-group"></ul>
+
+<h3>Modules :</h3>
+<ul id="selected-modules-list" class="list-group"></ul>
+
+<script type="text/javascript">
+    // Fonction pour filtrer le tableau en fonction de la recherche
+    function searchTable() {
+        const input = document.getElementById("search-input");
+        const filter = input.value.toUpperCase();
+        const tables = document.getElementsByTagName("table");
+
+        for (let i = 0; i < tables.length; i++) {
+            const table = tables[i];
+            const rows = table.getElementsByTagName("tr");
+
+            for (let j = 0; j < rows.length; j++) {
+                const row = rows[j];
+                const cells = row.getElementsByTagName("td");
+                let shouldDisplay = false;
+
+                for (let k = 0; k < cells.length; k++) {
+                    const cell = cells[k];
+                    if (cell) {
+                        const text = cell.textContent || cell.innerText;
+                        if (text.toUpperCase().indexOf(filter) > -1) {
+                            shouldDisplay = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (shouldDisplay) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+</body>
+</html>
 {% endblock %}
