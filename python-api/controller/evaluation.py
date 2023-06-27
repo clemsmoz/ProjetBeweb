@@ -1,7 +1,7 @@
 from DAO.connectionbdd import connection_params
 import mysql.connector
 import DAO.queries_eval
-from models.Evaluation import Evaluation
+from models.evaluation import Evaluation
 
 def connect_to_database():
     return mysql.connector.connect(**connection_params)

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>{{ apprenant.pseudo }}</h1>
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Nom</th>
+        <th scope="col">Prénom</th>
+        <th scope="col">Pseudo</th>
+        <th scope="col">Adresse</th>
+        <th scope="col">email</th>
+        <th scope="col">téléphone</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+          <td>{{ apprenant.nom }}</td>
+          <td>{{ apprenant.prenom }}</td>
+          <td>{{ apprenant.pseudo }}</td>
+          <td>{{ apprenant.adresse }}</td>
+          <td>{{ apprenant.email }}</td>
+          <td>{{ apprenant.telephone }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+{% include "navbar.html" %}
+
+{% endblock %} 
