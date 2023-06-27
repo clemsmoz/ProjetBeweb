@@ -135,6 +135,8 @@ def post3():
 def list_all_evaluations():
     evaluations = controller.evaluation.list_all_evaluations()
     return render_template('evaluations.html', evaluations=evaluations)
+
+
 @app.route('/createEvaluations', methods=['GET', 'POST'])
 def create_evaluation():
     if request.method == 'POST':
