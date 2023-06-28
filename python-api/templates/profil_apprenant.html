@@ -3,28 +3,44 @@
 {% block content %}
 
 <h1>{{ apprenant.pseudo }}</h1>
-<table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">Nom</th>
-        <th scope="col">Prénom</th>
-        <th scope="col">Pseudo</th>
-        <th scope="col">Adresse</th>
-        <th scope="col">email</th>
-        <th scope="col">téléphone</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-          <td>{{ apprenant.nom }}</td>
-          <td>{{ apprenant.prenom }}</td>
-          <td>{{ apprenant.pseudo }}</td>
-          <td>{{ apprenant.adresse }}</td>
-          <td>{{ apprenant.email }}</td>
-          <td>{{ apprenant.telephone }}</td>
-      </tr>
-    </tbody>
-  </table>
+<ol class="list-group list-group-numbered">
+  <li class="list-group-item d-flex justify-content-between align-items-start">
+    <div class="ms-2 me-auto">
+      <div class="fw-bold">Nom:</div>
+      {{ apprenant.nom }}
+    </div>
+  </li>
+  <li class="list-group-item d-flex justify-content-between align-items-start">
+    <div class="ms-2 me-auto">
+      <div class="fw-bold">Prénom:</div>
+      {{ apprenant.prenom }}
+    </div>
+  </li>
+  <li class="list-group-item d-flex justify-content-between align-items-start">
+    <div class="ms-2 me-auto">
+      <div class="fw-bold">Pseudo:</div>
+      {{ apprenant.pseudo }}
+    </div>
+  </li>
+  <li class="list-group-item d-flex justify-content-between align-items-start">
+    <div class="ms-2 me-auto">
+      <div class="fw-bold">Adresse:</div>
+      {{ apprenant.adresse }}
+    </div>
+  </li>
+  <li class="list-group-item d-flex justify-content-between align-items-start">
+    <div class="ms-2 me-auto">
+      <div class="fw-bold">Email:</div>
+      {{ apprenant.email }}
+    </div>
+  </li>
+  <li class="list-group-item d-flex justify-content-between align-items-start">
+    <div class="ms-2 me-auto">
+      <div class="fw-bold">Téléphone:</div>
+      {{ apprenant.telephone }}
+    </div>
+  </li>
+</ol>
 
 {% include "navbar.html" %}
 

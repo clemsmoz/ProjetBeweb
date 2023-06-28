@@ -162,6 +162,7 @@ def get_apprenant(pseudo):
     apprenant = controller.apprenant.get_apprenant(pseudo)
     return render_template('profil_apprenant.html', apprenant=apprenant)
 
+
 if __name__ == '__main__':
         app.static_folder = 'static'
         app.run(host='0.0.0.0', port=5000)
