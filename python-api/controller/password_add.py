@@ -4,6 +4,7 @@ import mysql.connector
 import bcrypt
 import DAO.queries_general
 import controller.login
+
 def updateThisPassword(method):
     if method == 'POST':
         try:
@@ -13,8 +14,9 @@ def updateThisPassword(method):
             params = {'pseudo': pseudo, 'hashed_password': hashed_password }
 
             role = controller.login.get_role(pseudo)
-            
+
             if role:
+                # requête de maj du mot de passe en fonction du rôle de l'utilisateur
                 if role == 'administrateur':
                     update_password = DAO.queries_general.update_password_admin
                 elif role == 'formateur':
@@ -27,6 +29,7 @@ def updateThisPassword(method):
                     return 'table inconnue'
                 with mysql.connector.connect(**connection_params) as db:
                     with db.cursor() as c:
+                        # Maj du mot de passe dans la table appropriée
                         c.execute(update_password, params)
                         db.commit()
                 return 'Mot de passe mis à jour avec succès'
@@ -35,4 +38,5 @@ def updateThisPassword(method):
 
         except mysql.connector.Error as error:
             print("Failed to execute query: {}".format(error))
+
 

@@ -24,9 +24,9 @@ class User:
         return self.password_hash
     
     def set_password(self, password):
-        # Hasher le mot de passe et le stocker sous forme de hachage sécurisé
+        # Hash du mot de passe et stockage
         self.password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
         
     def check_password(self, password):
-        # Vérifier si le mot de passe fourni correspond au mot de passe haché stocké
+        # Vérification password fourni == password haché stocké
         return bcrypt.checkpw(password.encode('utf-8'), self.password_hash)

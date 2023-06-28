@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<title>SUPPRIMER</title>
+</head>
+<body>
+    <div class="container">
+        <h1>SUPPRIMER</h1>
+        <h2>{{ objBloc.titre }}</h2>
+        <form action="/DeleteBloc/{{ table }}/{{ objBloc.id }}" method="POST">
+            <div class="optnav">
+                <button type="button" class="btn navbtn" onclick="window.location.href='/selection'">NON</button>
+                <button type="submit" class="btn navbtn">OUI</button>
+            </div>
+        </form>
+    </div>
+    {% include "navbar.html" %}
+</body>
+</html>
+{% endblock %}

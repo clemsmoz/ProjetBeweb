@@ -12,3 +12,11 @@ class Formation:
     
     def get_contenu(self):
         return self.contenu
+    
+    # retourne un dictionnaire contenant les attributs de la formation
+    def json(self):
+        return {
+            'id': self.id,
+            'titre': self.titre,
+            'contenu': self.contenu
+        }

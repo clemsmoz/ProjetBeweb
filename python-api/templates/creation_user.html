@@ -5,13 +5,13 @@
     function showForm() {
         let selectValue = document.getElementById("userType").value;
 
-        // Masquer tous les formulaires
+        // Cacher tous les formulaires
         document.getElementById("adminForm").style.display = "none";
         document.getElementById("formateurForm").style.display = "none";
         document.getElementById("apprenantForm").style.display = "none";
         document.getElementById("salarieForm").style.display = "none";
 
-        // Afficher le formulaire correspondant à l'option sélectionnée
+        // Afficher le formulaire sélectionné
         if (selectValue === "administrateur") {
             document.getElementById("adminForm").style.display = "block";
         } else if (selectValue === "formateur") {

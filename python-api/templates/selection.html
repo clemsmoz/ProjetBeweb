@@ -4,39 +4,45 @@
 
 {% include "navbar.html" %}
 <h1 class="admin_title">SELECTION</h1>
+{% if message %}
+<h2>{{ message }}</h2>
+{% endif %}
 <form id="updateFormation" action="/selectBloc" method = "GET">
     <div class="form-group">
         <label for="rechercher">RECHERCHER</label>
         <div class="add_act">
-            <input type="text" class="form-control form_title" name="form_title" aria-describedby="formTitleHelp" placeholder="...">
+            <input type="text" id="sbloc" class="form-control form_title" name="form_title" aria-describedby="formTitleHelp" placeholder="..." {% if id_bloc %} value="{{ id_bloc }}" {% endif %}>
             <small class="form-text text-muted formTitleHelp"></small>
             <button type="submit" class="btn plusbtn"><i class="fa-solid fa-magnifying-glass"></i></button>
         </div>
     </div>
 </form>
-<form id="updateBloc" action="" method = "GET">
+<form id="updateBloc" action="" method="GET">
     <div class="form-group">
         <label for="select_formation">SELECTION FORMATION</label>
-        <select name="sformation" class="form-control" id="sformation">
+        <select name="formation" class="form-control" id="sformation">
             <option value="" selected disabled>Choisissez une formation</option>
-            <option value="1">formation1</option>
-            <option value="2">formation2</option>
-            <option value="3">...</option>
+            {% for formation in formations %}
+                <option value="{{ formation.id }}">{{ formation.titre }}</option>
+            {% endfor %}
         </select>
+
     </div>
     <div class="form-group">
         <label for="select_activite">SELECTION ACTIVITE TYPE</label>
-        <select name="sactivite" class="form-control" id="sactivite">
+        <select name="activite" class="form-control" id="sactivite">
             <option value="" selected disabled>Choisissez une activite</option>
-            <option value="1">activite1</option>
-            <option value="2">activite2</option>
-            <option value="3">...</option>
+            {% if activites %}
+                {% for activite in activites %}
+                    <option value="{{ activite.id }}">{{ activite.titre }}</option>
+                {% endfor %}
+            {% endif %}
         </select>
     </div>
     <div class="form-group">
         <label for="select_cp">SELECTION CP</label>
-        <select name="scp" class="form-control" id="scp">
-            <option value="" selected disabled>Choisissez une formation</option>
+        <select name="cp" class="form-control" id="scp">
+            <option value="" selected disabled>Choisissez une compétence</option>
             <option value="1">cp1</option>
             <option value="2">cp2</option>
             <option value="3">...</option>
@@ -44,7 +50,7 @@
     </div>
     <div class="form-group">
         <label for="select_module">SELECTION MODULE</label>
-        <select name="smodule" class="form-control" id="smodule">
+        <select name="module" class="form-control" id="smodule">
             <option value="" selected disabled>Choisissez un module</option>
             <option value="1">module1</option>
             <option value="2">module2</option>
@@ -53,7 +59,7 @@
     </div>
     <div class="form-group">
         <label for="select_item">SELECTION ITEM</label>
-        <select name="sitem" class="form-control" id="sitem">
+        <select name="item" class="form-control" id="sitem">
             <option value="" selected disabled>Choisissez un item</option>
             <option value="1">item1</option>
             <option value="2">item2</option>
@@ -61,10 +67,148 @@
         </select>
     </div><br>
     <div class="optnav">
-        <button type="submit" class="btn navbtn2" onclick="window.location.href='#'">MODIFIER</button>
-        <button type="submit" class="btn navbtn2" onclick="window.location.href='#'">AJOUTER</button>
-        <button type="submit" class="btn navbtn2" onclick="window.location.href='#'">SUPPRIMER</button>
+        <button type="submit" class="btn navbtn2" id="btnModifier">MODIFIER</button>
+        <button type="submit" class="btn navbtn2" id="btnAjouter">AJOUTER</button>
+        <button type="submit" class="btn navbtn2" id="btnSupprimer">SUPPRIMER</button>
     </div>
 </form>
+<script>
+    let formation = document.getElementById("sformation");
+    let activite = document.getElementById("sactivite");
+    let cp = document.getElementById("scp");
+    let module = document.getElementById("smodule");
+    let item = document.getElementById("sitem");
 
+
+    formation.addEventListener("change", function() {
+        let id = this.value;
+        fetch('/activite/' + id)
+            .then(response => response.json())
+            .then(data => {
+                // Maj du contenu des menus avec les données reçues
+                const activitesMenu = document.getElementById('sactivite');
+                // Supprimer les options actuelles des menus
+                activitesMenu.innerHTML = '';
+                activitesMenu.innerHTML += `<option value="" selected disabled>Choisissez une activite</option>`
+                // Ajouter les nouvelles options aux menus
+                data.activites.forEach(activite => {
+                    const option = document.createElement('option');
+                    option.text = activite.titre;
+                    option.value = activite.id;
+                    activitesMenu.appendChild(option);
+                });
+            });
+    });
+
+    activite.addEventListener("change", function() {
+        let id = this.value;
+        fetch('/cp/' + id)
+            .then(response => response.json())
+            .then(data => {
+                // Maj du contenu des menus avec les données reçues
+                const cpMenu = document.getElementById('scp');
+                // Supprimer les options actuelles des menus
+                cpMenu.innerHTML = '';
+                cpMenu.innerHTML += `<option value="" selected disabled>Choisissez une compétence</option>`;
+                // Ajouter les nouvelles options aux menus
+                data.cps.forEach(cp => {
+                    const option = document.createElement('option');
+                    option.text = cp.titre;
+                    option.value = cp.id;
+                    cpMenu.appendChild(option);
+
+                    if (cp.id === selectedCp) {
+                    option.selected = true; // Sélectionner l'option
+                }
+                });
+            });
+    });
+
+    cp.addEventListener("change", function() {
+        let id = this.value;
+        fetch('/module/' + id)
+            .then(response => response.json())
+            .then(data => {
+                // Maj du contenu contenu des menus avec les données reçues
+                const moduleMenu = document.getElementById('smodule');
+                // Supprimer les options actuelles des menus
+                moduleMenu.innerHTML = '';
+                moduleMenu.innerHTML += `<option value="" selected disabled>Choisissez un module</option>`;
+                // Ajouter les nouvelles options aux menus
+                data.modules.forEach(module => {
+                    const option = document.createElement('option');
+                    option.text = module.titre;
+                    option.value = module.id;
+                    moduleMenu.appendChild(option);
+                });
+            });
+    });
+
+    module.addEventListener("change", function() {
+        let id = this.value;
+        fetch('/item/' + id)
+            .then(response => response.json())
+            .then(data => {
+                // Maj du contenu contenu des menus avec les données reçues
+                const itemMenu = document.getElementById('sitem');
+                // Supprimer les options actuelles des menus
+                itemMenu.innerHTML = '';
+                itemMenu.innerHTML += `<option value="" selected disabled>Choisissez un item</option>`;
+                // Ajouter les nouvelles options aux menus
+                data.items.forEach(item => {
+                    const option = document.createElement('option');
+                    option.text = item.titre;
+                    option.value = item.id;
+                    itemMenu.appendChild(option);
+                });
+            });
+    });
+
+    // Ecoute d'événements pour les boutons de l'optnav
+    document.querySelector(".optnav").addEventListener("click", function(event) {
+        event.preventDefault();
+        let selectedBloc;
+        let menuName;
+        let buttonId = event.target.id;
+
+        // Vérification du submit du formulaire updateFormation
+        if (document.getElementById("updateFormation").submitted) {
+            // Utiliser la valeur sélectionnée dans le dernier menu déroulant (sitem)
+            selectedBloc = document.getElementById("sblock").value;
+        } else {
+            // Trouver le dernier menu déroulant non vide dans le formulaire updateBloc
+            let selectMenus = document.getElementById("updateBloc").querySelectorAll("select");
+            
+            for (let i = selectMenus.length - 1; i >= 0; i--) {
+                if (selectMenus[i].value !== "") {
+                    // Utiliser la valeur sélectionnée dans le dernier menu déroulant non vide
+                    menuName = selectMenus[i].name;
+                    selectedBloc = selectMenus[i].value;
+                    break;
+                }
+            }
+        }
+        if (buttonId === "btnModifier") {
+            // Redirection vers l'update
+            window.location.href = '/updateFormations/' + menuName + '/' + selectedBloc ;
+        } else if (buttonId === "btnAjouter") {
+            // Redirection vers l'ajout"
+            window.location.href = '/route_pour_ajouter';
+        } else {
+            // Redirection avec la valeur sélectionnée
+            if (selectedBloc) {
+                if (menuName) {
+                    window.location.href = '/DeleteForm/' + menuName + '/' + selectedBloc ;
+                } else {
+                    window.location.href = '/DeleteForm/' + selectedBloc ;
+                }
+            } else {
+                // Aucune valeur sélectionnée n'est trouvée
+                console.log("Aucune valeur sélectionnée");
+            }
+        }
+});
+    
+
+</script>
 {% endblock %}

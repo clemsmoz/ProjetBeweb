@@ -7,3 +7,4 @@ class Activite(Formation):
 
     def get_formation(self):
         return self.idFK
+    
