@@ -6,6 +6,8 @@ import controller.valide_token
 import DAO.queries_eval
 import controller.evaluation
 import controller.select_menu
+import controller.apprenant
+import controller.create_formation
 import json
 
 app = Flask(__name__)
@@ -43,11 +45,9 @@ def index():
     elif controller.valide_token.has_valid_token() == 'apprenant':
         role="apprenant"
         section = controller.valide_token.verify_section()
-        pseudo = controller.apprenant.get_apprenant()
         # utilisation de variables globales pour le role et la section
         app.jinja_env.globals['role'] = role
         app.jinja_env.globals['section'] = section
-        app.jinja_env.globals['pseudo'] = pseudo
         return render_template('accueil_apprenant.html')
     elif controller.valide_token.has_valid_token() == 'salarie':
         role="salarie"
