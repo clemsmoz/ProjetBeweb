@@ -4,24 +4,90 @@
 
 {% include "navbar.html" %}
 <h1 class="admin_title">NOUVELLE FORMATION</h1>
-<form id="addFormation" action="" method = "POST">
+{% if message %}
+<h2>{{ message }}</h2>
+{% endif %}
+<form id="addFormation" action="/createFormationOk" method="POST">
     <div class="form-group">
-        <label for="form_title">INTITULE FORMATION</label>
+        <label for="form_title">FORMATION</label>
         <input type="text" class="form-control form_title" name="form_title" aria-describedby="formTitleHelp" placeholder="titre formation" value="DWWM">
         <small class="form-text text-muted formTitleHelp"></small>
+        <input type="text" class="form-control form_content" name="form_content" aria-describedby="formContentHelp" placeholder="resume formation" value="developper des applications et des sites web sur ordinateur et mobile">
+        <small class="form-text text-muted formTitleHelp"></small>
     </div>
-    <div class="form-group">
-        <label for="title_activite">INTITULE ACTIVITE</label>
-        <div class="add_act">
+    <div id="activiteContainer">
+        <div class="form-group">
+            <label for="act_title">ACTIVITE</label>
             <input type="text" class="form-control act_title" name="act_title" aria-describedby="acTitleHelp" placeholder="titre activité" value="Front-End">
             <small class="form-text text-muted actTitleHelp"></small>
-            <button type="button" class="btn plusbtn"><i class="fa-solid fa-plus"></i></button>
         </div>
+        <div class="form-group">
+            <div class="add_act">
+                <input type="text" class="form-control act_content" name="act_content" aria-describedby="acContentHelp" placeholder="resume activité" value="developper la partie Front-End d'une application">
+                <small class="form-text text-muted actTitleHelp"></small>
+                <button type="button" class="btn plusbtn" onclick="addNewActiviteField()"><i class="fa-solid fa-plus"></i></button>
+            </div>
+        </div>    
     </div><br>
     <div class="optnav">
         <button type="button" class="btn navbtn" onclick="window.location.href='/accueil'">Retour</button>
         <button type="submit" class="btn navbtn">Valider</button>
     </div>
 </form>
+
+<script>
+    // Variable de compteur pour les activités
+    let activiteCount = 2;
+
+    function addNewActiviteField() {
+        let activiteContainer = document.querySelector('#activiteContainer');
+
+        // Création d'un nouveau formulaire pour l'activité
+        let newForm = document.createElement('div');
+        newForm.className = 'form-group';
+
+        // Ajout d'un label pour le titre deactivité
+        let newLabel = document.createElement('label');
+        newLabel.htmlFor = 'title_activite';
+        newLabel.textContent = 'ACTIVITE ' + activiteCount;
+
+        // Ajout d'un input pour le titre de l'activité
+        let newInput = document.createElement('input');
+        newInput.type = 'text';
+        newInput.className = 'form-control act_title';
+        newInput.name = 'act_title';
+        newInput.setAttribute('aria-describedby', 'acTitleHelp');
+        newInput.placeholder = 'titre activité';
+
+        let newSmall = document.createElement('small');
+        newSmall.className = 'form-text text-muted actTitleHelp';
+
+        // Ajout d'un deuxième formulaire pour le contenu de l'activité
+        let newForm2 = document.createElement('div');
+        newForm2.className = 'form-group';
+
+        // Ajout d'un champ de saisie pour le résumé de l'activité
+        let newContentInput = document.createElement('input');
+        newContentInput.type = 'text';
+        newContentInput.className = 'form-control act_content';
+        newContentInput.name = 'act_content';
+        newContentInput.setAttribute('aria-describedby', 'acContentHelp');
+        newContentInput.placeholder = 'résumé activité';
+
+        // Ajout des éléments créés
+        newForm.appendChild(newLabel);
+        newForm.appendChild(newInput);
+        newForm.appendChild(newSmall);
+        newForm2.appendChild(newContentInput);
+
+        // Ajout des formulaires au conteneur
+        activiteContainer.appendChild(newForm);
+        activiteContainer.appendChild(newForm2);
+
+        // Compteur ++
+        activiteCount++;
+    }
+</script>
+
 
 {% endblock %}

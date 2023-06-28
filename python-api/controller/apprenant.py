@@ -9,7 +9,7 @@ def connect_to_database():
 def get_apprenant(pseudo):
     with connect_to_database() as db:
         with db.cursor() as c:
-            c.execute(DAO.queries_apprenant.get_apprenant, {'pseudo': pseudo})
+            c.execute(DAO.queries_apprenant.get_apprenant, {'pseudo':pseudo})
             result = c.fetchall()
             apprenant = []
             for row in result:
