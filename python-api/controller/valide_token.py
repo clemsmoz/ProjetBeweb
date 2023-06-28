@@ -9,13 +9,13 @@ def has_valid_token():
 
         try:
             payload = jwt.decode(token, secret_key, algorithms=['HS256'])
-            # Vérifiez les informations supplémentaires dans le payload si nécessaire
+            # Vérification du payload
             return payload['role']
         except jwt.ExpiredSignatureError:
-            # Gérer les erreurs d'expiration du token
+            # Erreurs d'expiration du token
             pass
         except jwt.InvalidTokenError:
-            # Gérer les autres erreurs de token
+            # Autres erreurs de token
             pass
 
     return False
@@ -29,10 +29,10 @@ def verify_section():
             payload = jwt.decode(token, secret_key, algorithms=['HS256'])
             return payload['section']
         except jwt.ExpiredSignatureError:
-            # Gérer les erreurs d'expiration du token
+            # Erreurs d'expiration du token
             pass
         except jwt.InvalidTokenError:
-            # Gérer les autres erreurs de token
+            # Autres erreurs de token
             pass
 
     return False

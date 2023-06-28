@@ -16,6 +16,7 @@ import jwt
 def get_role(pseudo):
     with mysql.connector.connect(**connection_params) as db:
         with db.cursor() as c:
+            # Récupère le rôle de l'utilisateur en fonction de son pseudo
             c.execute(DAO.queries_general.select_table, {'pseudo': pseudo})
             result = c.fetchone()
             role = result[0]
@@ -26,35 +27,39 @@ def get_object(pseudo):
         with db.cursor() as c:
             role = get_role(pseudo)
             if role == 'administrateur':
-                c.execute(DAO.queries_admin.get_admin, {'pseudo' : pseudo})
+                # Récupère les données de l'administrateur correspondant au pseudo
+                c.execute(DAO.queries_admin.get_admin, {'pseudo': pseudo})
                 table = c.fetchall()
                 user = []
                 for row in table:
                     user = Administrateur(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8])
                     return user
             elif role == 'formateur':
-                c.execute(DAO.queries_formateur.get_formateur, {'pseudo' : pseudo})
+                # Récupère les données du formateur correspondant au pseudo
+                c.execute(DAO.queries_formateur.get_formateur, {'pseudo': pseudo})
                 table = c.fetchall()
                 user = []
                 for row in table:
                     user = Formateur(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8])
                     return user
             elif role == 'apprenant':
-                c.execute(DAO.queries_apprenant.get_apprenant, {'pseudo' : pseudo})
+                # Récupère les données de l'apprenant correspondant au pseudo
+                c.execute(DAO.queries_apprenant.get_apprenant, {'pseudo': pseudo})
                 table = c.fetchall()
-                user =[]
+                user = []
                 for row in table:
                     user = Apprenant(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10], row[11])
                     return user
             elif role == 'salarie':
-                c.execute(DAO.queries_salarie.get_salarie, {'pseudo' : pseudo})
+                # Récupère les données du salarié correspondant au pseudo
+                c.execute(DAO.queries_salarie.get_salarie, {'pseudo': pseudo})
                 table = c.fetchall()
                 user = []
                 for row in table:
                     user = Salarie(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8])
                     return user
             else:
-                return 'Role utilisateur non disponible.'
+                return 'Rôle utilisateur non disponible.'
 
 def verifyLog():
     if request.method == 'GET':
@@ -63,6 +68,7 @@ def verifyLog():
 
         with mysql.connector.connect(**connection_params) as db:
             with db.cursor() as c:
+                # Vérifie si l'utilisateur existe et vérifie le mot de passe
                 c.execute(DAO.queries_general.get_hashed_password, {'pseudo': pseudo})
                 result = c.fetchone()
 
@@ -83,7 +89,7 @@ def verifyLog():
                             token = jwt.encode(payload, secret_key, algorithm='HS256')
                             session['token'] = token
 
-                        return f'Bienvenue, {user.get_full_name()} !'
+                        return user
                     else:
                         return 'Mot de passe incorrect.'
                 else:

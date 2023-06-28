@@ -1,9 +1,9 @@
 from models.Formation import Formation
 
 class Module(Formation):
-    def __init__(self, id, titre, contenu, cp):
+    def __init__(self, id, titre, contenu, idFK):
         super().__init__(id, titre, contenu)
-        self.cp = cp
+        self.idFK = idFK
 
     def get_cp(self):
-        return self.cp
+        return self.idFK
