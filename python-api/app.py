@@ -5,6 +5,8 @@ import controller.password_add
 import controller.valide_token
 import DAO.queries_eval
 import controller.evaluation
+import DAO.queries_apprenant
+import controller.apprenant
 
 app = Flask(__name__)
 app.secret_key = 'fondes2023'
@@ -16,9 +18,10 @@ def log():
 @app.route('/verifyLogin', methods=['GET'])
 def login():
     if request.method == 'GET':
-        message = verifyLog()
+        user = verifyLog()
+        message = "bienvenu "+ user.get_full_name()
+        app.jinja_env.globals['user'] = user
         flash(message)
-        verifyLog()
         return redirect('/accueil')
 
 @app.route('/accueil')
@@ -153,6 +156,12 @@ def delete_evaluation(id_evaluation):
 def get_evaluation(id_evaluation):
     evaluation = controller.evaluation.get_evaluation(id_evaluation)    
     return render_template('detail_evaluation.html', evaluation=evaluation)
+
+@app.route('/profil/<string:pseudo>', methods=['GET'])
+def get_apprenant(pseudo):
+    apprenant = controller.apprenant.get_apprenant(pseudo)
+    return render_template('profil_apprenant.html', apprenant=apprenant)
+
 
 if __name__ == '__main__':
         app.static_folder = 'static'

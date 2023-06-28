@@ -71,7 +71,7 @@ def verifyLog():
 
                     if bcrypt.checkpw(password.encode('utf-8'), hashed_password.encode('utf-8')):
                         user = get_object(pseudo)
-                        # session['user'] = user
+                        session['pseudo'] = user.get_pseudo()
                         # Générer le token de connexion
                         c.execute(DAO.queries_general.select_infos, {'pseudo': pseudo})
                         table_result = c.fetchone()  
@@ -83,7 +83,7 @@ def verifyLog():
                             token = jwt.encode(payload, secret_key, algorithm='HS256')
                             session['token'] = token
 
-                        return f'Bienvenue, {user.get_full_name()} !'
+                        return user
                     else:
                         return 'Mot de passe incorrect.'
                 else:
