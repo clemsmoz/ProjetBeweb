@@ -83,7 +83,7 @@ def verifyLog():
                             token = jwt.encode(payload, secret_key, algorithm='HS256')
                             session['token'] = token
 
-                        return f'Bienvenue, {user.get_full_name()} !'
+                        return user
                     else:
                         return 'Mot de passe incorrect.'
                 else:

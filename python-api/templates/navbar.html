@@ -54,7 +54,7 @@
                 <li><button class="btn btn-block btndec" onclick="window.location.href='/logout'">DECONNEXION</button></li>
             {% elif role == 'apprenant' %}
                 <li><button class="btn btn-block btnav" onclick="window.location.href='/accueil'">ACCUEIL</button></li>
-                <li><button class="btn btn-block btnav">PROFIL</button></li>
+                <li><button class="btn btn-block btnav" onclick="window.location.href='/profil/{{ user.pseudo }}'">MON PROFIL</button></li>
                 <li>ACTIVITE TYPE 1</li>
                 <li>ACTIVITE TYPE 2</li>
                 <li></li>

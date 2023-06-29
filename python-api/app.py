@@ -20,9 +20,10 @@ def log():
 @app.route('/verifyLogin', methods=['GET'])
 def login():
     if request.method == 'GET':
-        message = verifyLog()
+        user = verifyLog()
+        app.jinja_env.globals['user'] = user
+        message = f'Bienvenue, {user.get_full_name()} !'
         flash(message)
-        verifyLog()
         return redirect('/accueil')
 
 @app.route('/accueil')
