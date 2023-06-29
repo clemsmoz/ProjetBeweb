@@ -8,10 +8,16 @@
 <body>
 <button type="button" class="btn navbtn" onclick="window.location.href='/evaluations'">Retour</button>
 
+{% if message %}
+    <div class="alert alert-success">
+        {{ message }}
+    </div>
+{% endif %}
+
 <form action="/createEvaluations" method="POST">
     <div class="form-group">
         <label for="titreEvaluation">Titre :</label>
-        <input type="text" class="form-control" id="titreEvaluation" name="titreEvaluation">
+        <input type="text" class="form-control" id="titreEvaluation" name="titreEvaluation" value="eval test">
     </div>
     <div class="form-group">
         <label for="dateEvaluation">Date d'évaluation :</label>
@@ -19,19 +25,24 @@
     </div>
     <div class="form-group">
         <label for="coeffItem">Coefficient des items :</label>
-        <input type="number" class="form-control" id="coeffItem" name="coeffItem">
+        <input type="number" class="form-control" id="coeffItem" name="coeffItem" value="2">
     </div>
     <div class="form-group">
         <label for="coeffEval">Coefficient de l'évaluation :</label>
-        <input type="number" class="form-control" id="coeffEval" name="coeffEval">
+        <input type="number" class="form-control" id="coeffEval" name="coeffEval" value="2">
     </div>
     <div class="form-group">
         <label for="noteEval">Note de l'évaluation :</label>
-        <input type="number" class="form-control" id="noteEval" name="noteEval">
+        <input type="number" class="form-control" id="noteEval" name="noteEval" value="2">
     </div>
     <div class="form-group">
         <label for="noteItem">Note des items :</label>
-        <input type="number" class="form-control" id="noteItem" name="noteItem">
+        <input type="number" class="form-control" id="noteItem" name="noteItem" value="2">
+    </div>
+
+    <div class="form-group">
+        <label for="id_formation_FK">ID du formateur :</label>
+        <input type="number" class="form-control" id="id_formation_FK" name="id_formation_FK" value="3">
     </div>
 
     <title>Compétences</title>
@@ -40,30 +51,28 @@
             const table = document.getElementById(tableId);
             const checkboxes = table.querySelectorAll('input[type="checkbox"]');
             const selectedItems = [];
-
+        
             checkboxes.forEach(function(checkbox) {
                 if (checkbox.checked) {
                     const row = checkbox.parentNode.parentNode;
-                    const item = {
-                        id: row.cells[0].textContent,
-                        titre: row.cells[1].textContent,
-                        contenu: row.cells[2].textContent
-                    };
-                    selectedItems.push(item);
+                    const id = row.cells[0].textContent; // Récupérer l'ID de l'item
+                    selectedItems.push(id); // Ajouter l'ID à la liste des items sélectionnés
                 }
             });
-
+        
             const listId = tableId + "-list";
             const listContainer = document.getElementById(listId);
             listContainer.innerHTML = ""; // Réinitialiser la liste à chaque appel
-
-            selectedItems.forEach(function(item) {
+        
+            selectedItems.forEach(function(id) {
                 const listItem = document.createElement("li");
-                listItem.textContent = item.titre;
+                listItem.textContent = id; // Afficher l'ID de l'item
                 listContainer.appendChild(listItem);
             });
+            // Mettre à jour la valeur de l'input hidden avec les IDs des items sélectionnés
+            const selectedItemsInput = document.getElementById("selected-items-input");
+            selectedItemsInput.value = JSON.stringify(selectedItems); // Stocker les ID sous forme de liste JSON
         }
-
         function toggleTable(tableId) {
             const table = document.getElementById(tableId);
             table.style.display = table.style.display === "none" ? "block" : "none";
@@ -71,7 +80,7 @@
 
         function searchTable() {
             const input = document.getElementById("search-input").value.toLowerCase();
-            const tableRows = document.querySelectorAll("#activites-table tbody tr, #cp-table tbody tr, #items-table tbody tr, #modules-table tbody tr");
+            const tableRows = document.querySelectorAll("#items-table tbody tr,");
 
             tableRows.forEach(function(row) {
                 const text = row.textContent.toLowerCase();
@@ -83,54 +92,7 @@
             });
         }
     </script>
-    <div class="container">
-        <h1>Liste des compétences </h1>
-        <input type="text" id="search-input" class="form-control" placeholder="Rechercher..." oninput="searchTable()">
-        <h2>Liste des activités <button type="button" class="btn btn-primary" onclick="toggleTable('activites-table')">Cacher/Montrer</button></h2>
-        <table id="activites-table" class="table table-striped">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Titre</th>
-                    <th>Résumé</th>
-                    <th>Sélectionner</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for activite in activites %}
-                <tr>
-                    <td>{{ activite.id }}</td>
-                    <td>{{ activite.titre }}</td>
-                    <td>{{ activite.contenu }}</td>
-                    <td><input type="checkbox" onchange="createList('activites-table')" /></td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-
-        <h2>Liste des CP <button type="button" class="btn btn-primary" onclick="toggleTable('cp-table')">Cacher/Montrer</button></h2>
-        <table id="cp-table" class="table table-striped">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Titre</th>
-                    <th>Contenu</th>
-                    <th>Sélectionner</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for cp in Cps %}
-                <tr>
-                    <td>{{ cp.id }}</td>
-                    <td>{{ cp.titre }}</td>
-                    <td>{{ cp.contenu }}</td>
-                    <td><input type="checkbox" onchange="createList('cp-table')" /></td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-
-        <h2>Liste des items <button type="button" class="btn btn-primary" onclick="toggleTable('items-table')">Cacher/Montrer</button></h2>
+        <h1>Liste des items <button type="button" class="btn btn-primary" onclick="toggleTable('items-table')">Cacher/Montrer</button></h1>
         <table id="items-table" class="table table-striped">
             <thead>
                 <tr>
@@ -151,51 +113,16 @@
                 {% endfor %}
             </tbody>
         </table>
-
-        <h2>Liste des modules <button type="button" class="btn btn-primary" onclick="toggleTable('modules-table')">Cacher/Montrer</button></h2>
-        <table id="modules-table" class="table table-striped">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Titre</th>
-                    <th>Contenu</th>
-                    <th>Sélectionner</th>
-                </tr>
-            </thead>
-            <tbody>
-                {%for module in modules %}
-                <tr>
-                    <td>{{ module.id }}</td>
-                    <td>{{ module.titre }}</td>
-                    <td>{{ module.contenu }}</td>
-                    <td><input type="checkbox" onchange="createList('modules-table')" /></td>
-                </tr>
-                {%endfor %}
-            </tbody>
-        </table>
     </div>
-    <input type="hidden" name="activites" id="selected-activites-input">
-    <input type="hidden" name="cps" id="selected-cps-input">
     <input type="hidden" name="items" id="selected-items-input">
-    <input type="hidden" name="modules" id="selected-modules-input">
-
-    <button type="submit" class="btn btn-primary">Envoyer</button>
-    
+    <button type="submit" class="btn btn-primary">Envoyer</button> 
 </form>
     
     <div class="container">
-        <h2>Listes sélectionnées</h2>
-        <h3>Liste des activités</h3>
-        <ul id="activites-table-list"></ul>
-
-        <h3>Liste des CP</h3>
-        <ul id="cp-table-list"></ul>
-
-        <h3>Liste des items</h3>
+        <h2>Items sélectionnées</h2>
         <ul id="items-table-list"></ul>
 
-        <h3>Liste des modules</h3>
-        <ul id="modules-table-list"></ul>
+        
     </div>
     
 {% include "navbar.html" %}

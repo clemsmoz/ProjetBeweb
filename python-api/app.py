@@ -8,11 +8,13 @@ import DAO.queries_activite
 import DAO.queries_cp
 import DAO.queries_item
 import DAO.queries_module
+import DAO.queries_apprenant
 import controller.evaluation
 import controller.activite
 import controller.cp
 import controller.item
 import controller.module
+import controller.apprenant
 
 
 app = Flask(__name__)
@@ -136,20 +138,19 @@ def list_all_evaluations():
     evaluations = controller.evaluation.list_all_evaluations()
     return render_template('evaluations.html', evaluations=evaluations)
 
-
+    
 @app.route('/createEvaluations', methods=['GET', 'POST'])
 def create_evaluation():
     if request.method == 'POST':
         controller.evaluation.create_evaluation()
-        evaluations = controller.evaluation.list_all_evaluations()
-        return render_template('evaluations.html', evaluations=evaluations)
+        message = 'L\'évaluation a été créée avec succès.'  # Définir le message de succès
+        return render_template('create_evaluations.html', message=message)
     else:
         result = controller.activite.get_all_activite()
         activites = result[0]
-        Cps = result[1]
-        items = result[2]
-        modules = result[3]
-        return render_template('create_evaluations.html', activites=activites, Cps=Cps, items=items, modules=modules)
+        items = result[1]
+        return render_template('create_evaluations.html', activites=activites, items=items)
+
 
 @app.route('/evaluations/<int:id_evaluation>', methods=['PUT'])
 def update_evaluation(id_evaluation):
@@ -179,6 +180,10 @@ def get_all_activite():
     modules = result[3]
     return render_template('competence.html', activites=activites, Cps=Cps, items=items, modules=modules)
 
+@app.route('/allapprenants', methods=['GET'])
+def get_all_apprenants():
+    apprenants = controller.apprenant.get_all_apprenants()
+    return render_template('liste_apprenant.html', apprenants=apprenants)
 
 
 if __name__ == '__main__':

@@ -4,11 +4,29 @@
 <title>Évaluations</title>
 </head>
 <body>
+<script type="text/javascript">
+    
+    function searchTable() {
+        var input = document.getElementById("search-input").value.toLowerCase();
+        var tableRows = document.querySelectorAll("#table_eval tbody tr");
+
+        tableRows.forEach(function(row) {
+            var text = row.textContent.toLowerCase();
+            if (text.includes(input)) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    }
+</script>
+
 
     <div class="container">
         <h1>Liste des évaluations</h1>
         <a href="/createEvaluations" class="btn btn-primary mb-2">Créer une évaluation</a>
-        <table class="table">
+        <input type="text" id="search-input" class="form-control" placeholder="Rechercher..." oninput="searchTable()">
+        <table class="table" id="table_eval">
             <thead>
                 <tr>
                     <th>ID</th>
