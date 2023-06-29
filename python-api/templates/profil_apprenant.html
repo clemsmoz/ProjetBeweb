@@ -43,5 +43,46 @@
 </ol>
 
 {% include "navbar.html" %}
+<ol class="list-group list-group-numbered">
+  <li class="list-group-item d-flex justify-content-between align-items-start">
+    <div class="ms-2 me-auto">
+      <div class="fw-bold">Nom:</div>
+      {{ apprenant.nom }}
+    </div>
+  </li>
+  <li class="list-group-item d-flex justify-content-between align-items-start">
+    <div class="ms-2 me-auto">
+      <div class="fw-bold">Prénom:</div>
+      {{ apprenant.prenom }}
+    </div>
+  </li>
+  <li class="list-group-item d-flex justify-content-between align-items-start">
+    <div class="ms-2 me-auto">
+      <div class="fw-bold">Pseudo:</div>
+      {{ apprenant.pseudo }}
+    </div>
+  </li>
+  <li class="list-group-item d-flex justify-content-between align-items-start">
+    <div class="ms-2 me-auto">
+      <div class="fw-bold">Adresse:</div>
+      {{ apprenant.adresse }}
+    </div>
+  </li>
+  <li class="list-group-item d-flex justify-content-between align-items-start">
+    <div class="ms-2 me-auto">
+      <div class="fw-bold">Email:</div>
+      {{ apprenant.email }}
+    </div>
+  </li>
+  <li class="list-group-item d-flex justify-content-between align-items-start">
+    <div class="ms-2 me-auto">
+      <div class="fw-bold">Téléphone:</div>
+      {{ apprenant.telephone }}
+    </div>
+  </li>
+</ol>
 
+{% include "navbar.html" %}
+
+{% endblock %} 
 {% endblock %} 
