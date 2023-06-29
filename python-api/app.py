@@ -19,8 +19,8 @@ def log():
 def login():
     if request.method == 'GET':
         user = verifyLog()
-        message = "bienvenu "+ user.get_full_name()
         app.jinja_env.globals['user'] = user
+        message = f'Bienvenue, {user.get_full_name()} !'
         flash(message)
         return redirect('/accueil')
 

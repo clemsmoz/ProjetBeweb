@@ -29,13 +29,6 @@
         }
     });
 
-    fetch('/activite/'+{{ user.formation }})
-            .then(response => response.json())
-            .then(data => {
-                // Utilisez les données récupérées pour mettre à jour votre template HTML
-                console.log(data);
-            })
-            .catch(error => console.error('Erreur :', error));
 </script>
 
 
@@ -63,9 +56,9 @@
             {% elif role == 'apprenant' %}
                 <li><button class="btn btn-block btnav" onclick="window.location.href='/accueil'">ACCUEIL</button></li>
                 <li><button class="btn btn-block btnav" onclick="window.location.href='/profil/{{ user.pseudo }}'">MON PROFIL</button></li>
-                <!-- <ul id="activiteType">
-
-                </ul> -->
+                <li>ACTIVITE TYPE 1</li>
+                <li>ACTIVITE TYPE 2</li>
+                <li></li>
                 <li><button class="btn btn-block btndec" onclick="window.location.href='/logout'">DECONNEXION</button></li>
             {% elif role == 'salarie' %}
                 <li><button class="btn btn-block btnav" onclick="window.location.href='/accueil'">ACCUEIL</button></li>
