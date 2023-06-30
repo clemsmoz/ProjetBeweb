@@ -194,11 +194,11 @@
     </div>
     <div class="form-group">
         <label for="formation">Formation</label>
-        <select name="formation" class="form-control">
-            <option value="" selected disabled>Dans quelle formation est cet apprenant ?</option>
-            <option value="1">User-friendly zerodefect synergy
-            </option>
-            <option value="2">De-engineered neutral array</option>
+        <select name="formation" class="form-control" id="sformation">
+            <option value="" selected disabled>Choisissez une formation</option>
+            {% for formation in formations %}
+                <option value="{{ formation.id }}">{{ formation.titre }}</option>
+            {% endfor %}
         </select>
     </div>
     <div class="form-group">
