@@ -270,7 +270,9 @@ def get_update_formations(id, table):
         objBloc = controller.select_menu.get_object_bloc_by_id(id, table)
         if table != 'item':
             objList = controller.select_menu.get_list_obj(id, table)
-        return render_template('modification_formation.html', objBloc=objBloc, objList= objList, table=table, id=id)
+            return render_template('modification_formation.html', objBloc=objBloc, objList= objList, table=table, id=id)
+        else :
+            return render_template('modification_formation.html', objBloc=objBloc, table=table, id=id)
     else:
         # L'utilisateur n'est pas authentifié, rediriger vers la page de connexion
         return 'Veuillez vous connecter pour accéder à cette page'
