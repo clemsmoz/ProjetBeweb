@@ -1,11 +1,12 @@
 <script>
+    let section = "{{ section }}";
+    let role = "{{ role }}";
+    let buttons = document.getElementsByTagName('button');
     document.addEventListener('DOMContentLoaded', function() {
         let navbar = document.getElementById('navbar');
         let menuButton = document.getElementById('menuButton');
-        let buttons = document.getElementsByTagName('button');
+        
         // Valeur de la variable Jinja "section"
-        let section = "{{ section }}";
-
         menuButton.addEventListener('click', function() {
             navbar.classList.toggle('show');
         });
@@ -29,12 +30,54 @@
         }
     });
 </script>
+{% if role == 'apprenant' and apprenant %}
+<script>
+    let id_formation = "{{ apprenant.formation }}";
+    window.addEventListener('load', (e) => {
+        fetch('/apprenantActivites/' + id_formation)
+            .then(response => response.json())
+            .then(data => {
+                // Ajouter les nouvelles options aux menus
+                data.activites.forEach(activite => {
+                    const li = document.createElement('li');
+                    const btn = document.createElement('button');
+                    li.appendChild(btn);
+                    btn.innerHTML = activite.titre;
+                    btn.id = activite.id;
+                    btn.classList.add('btn', 'btn-block', 'btnav');
+                    document.getElementById('activity').appendChild(li);
+                });
+                document.getElementById('activity').insertAdjacentHTML('beforeend', '<li><button class="btn btn-block btndec" onclick="window.location.href=\'/logout\'">DECONNEXION</button></li>');
+
+
+                // ajout des classes aux boutons en fonction de la section
+                if (section === '1') {
+                    for (let i = 0; i < buttons.length; i++) {
+                        buttons[i].classList.add('becare');
+                    }
+                } else if (section === '2') {
+                    for (let i = 0; i < buttons.length; i++) {
+                        buttons[i].classList.add('begreen');
+                    }
+                } else if (section === '3') {
+                    for (let i = 0; i < buttons.length; i++) {
+                        buttons[i].classList.add('beweb');
+                    }
+                } else {
+                    for (let i = 0; i < buttons.length; i++) {
+                        buttons[i].classList.add('bepro');
+                    }
+                }
+            });
+    })
+</script>
+{% endif %}    
 
 
 <div id="navigation">
     <button id="menuButton" class="btn btn-block">Menu</button>
     <nav id="navbar" class="navbar navbar-inverse">
-        <ul class="nav navbar-nav">
+        <ul id="activity" class="nav navbar-nav">
             {% if role == 'administrateur' %}
                 <li><button class="btn btn-block btnav" onclick="window.location.href='/accueil'">ACCUEIL</button></li>
                 <li><button class="btn btn-block btnav" onclick="window.location.href='/create'">CREATION UTILISATEUR</button></li>
@@ -54,11 +97,7 @@
                 <li><button class="btn btn-block btndec" onclick="window.location.href='/logout'">DECONNEXION</button></li>
             {% elif role == 'apprenant' %}
                 <li><button class="btn btn-block btnav" onclick="window.location.href='/accueil'">ACCUEIL</button></li>
-                <li><button class="btn btn-block btnav">PROFIL</button></li>
-                <li>ACTIVITE TYPE 1</li>
-                <li>ACTIVITE TYPE 2</li>
-                <li></li>
-                <li><button class="btn btn-block btndec" onclick="window.location.href='/logout'">DECONNEXION</button></li>
+                <li><button class="btn btn-block btnav" onclick="window.location.href='/profil/{{ user.pseudo }}'">MON PROFIL</button></li>
             {% elif role == 'salarie' %}
                 <li><button class="btn btn-block btnav" onclick="window.location.href='/accueil'">ACCUEIL</button></li>
                 <li>PROMO 1</li>

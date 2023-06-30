@@ -20,9 +20,10 @@ def log():
 @app.route('/verifyLogin', methods=['GET'])
 def login():
     if request.method == 'GET':
-        message = verifyLog()
+        user = verifyLog()
+        app.jinja_env.globals['user'] = user
+        message = f'Bienvenue, {user.get_full_name()} !'
         flash(message)
-        verifyLog()
         return redirect('/accueil')
 
 @app.route('/accueil')
@@ -317,6 +318,12 @@ def get_evaluation(id_evaluation):
     return render_template('detail_evaluation.html', evaluation=evaluation)
 
 ##############################  Profil apprenant  ######################################
+
+@app.route('/apprenantActivites/<int:id_formation>', methods=['GET'])
+def get_activite_by_apprenant(id_formation):
+    result = controller.select_menu.get_activites(id_formation)
+    activites = [activite.json() for activite in result]
+    return json.dumps({'activites':activites})
 
 @app.route('/profil/<string:pseudo>', methods=['GET'])
 def get_apprenant(pseudo):
