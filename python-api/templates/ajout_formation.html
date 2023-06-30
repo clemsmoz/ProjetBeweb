@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% include "navbar.html" %}
+<h1 class="admin_title">AJOUT DANS {{ table|upper }}</h1>
+{% if message %}
+<h2>{{ message }}</h2>
+{% endif %}
+<form id="addFormation" action="" method="POST">
+    <table class="table table-bordered border-primary">
+        <thead id="thead">
+            <tr id="{{ objBloc.id }}">
+                <th class="objBlocTitre">{{ objBloc.titre }}</th>
+                <th class="objBlocContenu">{{ objBloc.contenu }}</th>
+            </tr>
+        </thead>
+        {% if objList %}
+        <tbody id="tbody">
+            {% for obj in objList %}
+                <tr id="{{ obj.id }}">
+                    <td class="objId" style="display: none;">{{ obj.id }}</td>
+                    <td class="objTitre">{{ obj.titre }}</td>
+                    <td class="objContenu">{{ obj.contenu }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        {% endif %}
+    </table>
+</form>
+<div id="objContainer">
+    <div class="form-group">
+        <input type="text" class="form-control obj_title" name="obj_title" aria-describedby="acTitleHelp" placeholder="titre" value="titre">
+        <small class="form-text text-muted actTitleHelp"></small>
+    </div>
+    <div class="form-group">
+        <div class="add_act">
+            <input type="text" class="form-control obj_content" name="obj_content" aria-describedby="acContentHelp" placeholder="titre" value="resume">
+            <small class="form-text text-muted actTitleHelp"></small>
+            <button type="button" class="btn plusbtn" onclick="addNewObjField()"><i class="fa-solid fa-plus"></i></button>
+        </div>
+    </div>
+</div>
+<div class="optnav">
+    <button type="button" class="btn navbtn" onclick="window.location.href='/accueil'">Retour</button>
+    <button type="submit" class="btn navbtn">Valider</button>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let thead = document.getElementById('thead');
+        let section = "{{ section}}";
+        if (section === '1') {
+            thead.classList.add('becare')
+        } else if (section === '2') {
+            thead.classList.add('begreen')
+        } else if (section === '3') {
+            thead.classList.add('beweb')
+        } else {
+            thead.classList.add('bepro')
+        }
+    });
+    function addNewObjField() {
+        let objContainer = document.querySelector('#objContainer');
+        let tbody = document.getElementById('tbody');
+
+        // Ajout d'un input pour le titre de l'activité
+        let newInput = document.createElement('input');
+        newInput.type = 'text';
+        newInput.className = 'form-control act_title';
+        newInput.name = 'act_title';
+        newInput.setAttribute('aria-describedby', 'acTitleHelp');
+        newInput.placeholder = 'titre activité';
+
+        let newSmall = document.createElement('small');
+        newSmall.className = 'form-text text-muted actTitleHelp';
+
+        // Ajout d'un deuxième formulaire pour le contenu de l'activité
+        let newForm2 = document.createElement('div');
+        newForm2.className = 'form-group';
+
+        // Ajout d'un champ de saisie pour le résumé de l'activité
+        let newContentInput = document.createElement('input');
+        newContentInput.type = 'text';
+        newContentInput.className = 'form-control act_content';
+        newContentInput.name = 'act_content';
+        newContentInput.setAttribute('aria-describedby', 'acContentHelp');
+        newContentInput.placeholder = 'résumé activité';
+
+        // Ajout des éléments créés
+        newForm.appendChild(newLabel);
+        newForm.appendChild(newInput);
+        newForm.appendChild(newSmall);
+        newForm2.appendChild(newContentInput);
+
+        // Ajout des formulaires au conteneur
+        activiteContainer.appendChild(newForm);
+        activiteContainer.appendChild(newForm2);
+    }
+</script>
+
+
+{% endblock %}

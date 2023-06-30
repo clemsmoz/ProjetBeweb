@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, redirect, flash, jsonify
+from flask import Flask, render_template, request, session, redirect, flash
 from controller.login import verifyLog
 import controller.user
 import controller.password_add
@@ -20,9 +20,10 @@ def log():
 @app.route('/verifyLogin', methods=['GET'])
 def login():
     if request.method == 'GET':
-        message = verifyLog()
+        user = verifyLog()
+        app.jinja_env.globals['user'] = user
+        message = f'Bienvenue, {user.get_full_name()} !'
         flash(message)
-        verifyLog()
         return redirect('/accueil')
 
 @app.route('/accueil')
@@ -48,6 +49,10 @@ def index():
         # utilisation de variables globales pour le role et la section
         app.jinja_env.globals['role'] = role
         app.jinja_env.globals['section'] = section
+        user = app.jinja_env.globals['user']
+        pseudo = user.pseudo
+        apprenant = controller.apprenant.get_apprenant(pseudo)
+        app.jinja_env.globals['apprenant'] = apprenant
         return render_template('accueil_apprenant.html')
     elif controller.valide_token.has_valid_token() == 'salarie':
         role="salarie"
@@ -280,6 +285,19 @@ def update_formations(id, table):
         # L'utilisateur n'est pas authentifié, rediriger vers la page de connexion
         return 'Veuillez vous connecter pour accéder à cette page'
 
+##############################  ajout formation  ###############################
+
+@app.route('/addFormation/<string:table>/<int:id>', methods=['GET'])
+def get_add_formations(id, table):
+    if controller.valide_token.has_valid_token() == 'administrateur':
+        objBloc = controller.select_menu.get_object_bloc_by_id(id, table)
+        if table != 'item':
+            objList = controller.select_menu.get_list_obj(id, table)
+        return render_template('ajout_formation.html', objBloc=objBloc, objList= objList, table=table, id=id)
+    else:
+        # L'utilisateur n'est pas authentifié, rediriger vers la page de connexion
+        return 'Veuillez vous connecter pour accéder à cette page'
+
 ##############################  Page Evaluation  ######################################
 
 # affichage de la liste d'evaluations
@@ -318,10 +336,15 @@ def get_evaluation(id_evaluation):
 
 ##############################  Profil apprenant  ######################################
 
+@app.route('/apprenantActivites/<int:id_formation>', methods=['GET'])
+def get_activite_by_apprenant(id_formation):
+    result = controller.select_menu.get_activites(id_formation)
+    activites = [activite.json() for activite in result]
+    return json.dumps({'activites':activites})
+
 @app.route('/profil/<string:pseudo>', methods=['GET'])
 def get_apprenant(pseudo):
-    apprenant = controller.apprenant.get_apprenant(pseudo)
-    return render_template('profil_apprenant.html', apprenant=apprenant)
+    return render_template('profil_apprenant.html')
 
 if __name__ == '__main__':
         app.static_folder = 'static'

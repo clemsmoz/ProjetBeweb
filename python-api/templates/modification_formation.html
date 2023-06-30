@@ -5,8 +5,8 @@
 <h1 class="admin_title">MODIFICATION {{ table|upper }}</h1><br>
 <div class="container">
     <form action="/updateBloc/{{ table }}/{{ objBloc.id }}" method="POST">
-        <table class="table">
-            <thead>
+        <table class="table table-bordered border-primary">
+            <thead id="thead">
                 <tr id="{{ objBloc.id }}">
                     <th class="objBlocTitre" contenteditable="true">{{ objBloc.titre }}</th>
                     <th class="objBlocContenu" contenteditable="true">{{ objBloc.contenu }}</th>
@@ -41,6 +41,19 @@
     </form>
 </div>
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let thead = document.getElementById('thead');
+        let section = "{{ section}}";
+        if (section === '1') {
+            thead.classList.add('becare')
+        } else if (section === '2') {
+            thead.classList.add('begreen')
+        } else if (section === '3') {
+            thead.classList.add('beweb')
+        } else {
+            thead.classList.add('bepro')
+        }
+    });
     // Écoute du submit du formulaire
     document.querySelector("form").addEventListener("submit", function(event) {
         event.preventDefault();
@@ -78,6 +91,7 @@
 
         this.submit();
     });
+
 </script>
 
 {% endblock %}
