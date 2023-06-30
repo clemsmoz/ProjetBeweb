@@ -78,7 +78,8 @@ def logout():
 def post():
     if controller.valide_token.has_valid_token() == 'administrateur':
         # L'utilisateur est authentifié, permettre l'accès à la page
-        return render_template('creation_user.html')
+        formations = controller.select_menu.list_formations()
+        return render_template('creation_user.html', formations=formations)
     else:
         # L'utilisateur n'est pas authentifié, rediriger vers la page de connexion
         return 'Veuillez vous connecter pour accéder à cette page'
@@ -293,7 +294,9 @@ def get_add_formations(id, table):
         objBloc = controller.select_menu.get_object_bloc_by_id(id, table)
         if table != 'item':
             objList = controller.select_menu.get_list_obj(id, table)
-        return render_template('ajout_formation.html', objBloc=objBloc, objList= objList, table=table, id=id)
+            return render_template('ajout_formation.html', objBloc=objBloc, objList= objList, table=table, id=id)
+        else:
+            return "L'ajout n'est pas autorisé dans les items"
     else:
         # L'utilisateur n'est pas authentifié, rediriger vers la page de connexion
         return 'Veuillez vous connecter pour accéder à cette page'
