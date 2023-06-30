@@ -342,6 +342,11 @@ def get_activite_by_apprenant(id_formation):
     activites = [activite.json() for activite in result]
     return json.dumps({'activites': activites})
 
+@app.route('/cpByApprenant/<int:id>', methods=['GET'])
+def get_cp_By_Apprenant(id):
+    cps = controller.select_menu.get_cps(id)    
+    return render_template('cp_apprenant.html', cps=cps)
+
 if __name__ == '__main__':
         app.static_folder = 'static'
         app.run(host='0.0.0.0', port=5000)

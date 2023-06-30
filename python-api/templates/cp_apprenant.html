@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">CP</th>
+        <th scope="col">MOYENNE CP</th>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+        {% for cp in cps %}
+        <tr>
+          <td>{{ cp.titre }}</td>
+          <td></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+
+{% include "navbar.html" %}
+
+<script>
+    
+</script>
+
+{% endblock %} 

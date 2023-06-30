@@ -29,8 +29,9 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 })
-    
-if(role == "apprenant"){
+</script> 
+{% if role =='apprenant' and apprenant %}
+<script>
         let id_formation = "{{ apprenant.formation }}";
 
         window.addEventListener("load", (event) => {
@@ -44,8 +45,18 @@ if(role == "apprenant"){
                     li.appendChild(btn);
                     btn.innerHTML = activite.titre;
                     btn.id = activite.id;
-                    btn.classList.add('btn', 'btn-block', 'btnav');
+                    btn.classList.add('btn', 'btn-block', 'btnav', 'acts');
                     document.getElementById('activity').appendChild(li)
+
+                    acts = document.querySelectorAll('.acts')
+                    console.log(acts)
+                    console.log(btn.id)
+
+                   acts.forEach(act => {
+                        act.addEventListener("click", function(){
+                            window.location.href="/cpByApprenant/"+btn.id
+                    })
+                   })
                 });
                 document.getElementById('activity').insertAdjacentHTML('beforeend', '<li><button class="btn btn-block btndec" onclick="window.location.href=\'/logout\'">DECONNEXION</button></li>');
 
@@ -70,11 +81,9 @@ if(role == "apprenant"){
         })
 
         
-        });
-}
-   
+        });   
 </script>
-
+{% endif %}
 
 <div id="navigation">
     <button id="menuButton" class="btn btn-block">Menu</button>
